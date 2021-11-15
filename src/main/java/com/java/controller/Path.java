@@ -8,7 +8,7 @@ package com.java.controller;
  */
 public final class Path {
 
-	// pages
+	// pagesefe
 	public static final String PAGE__LOGIN = "jsp/login.jsp";
 	public static final String PAGE__MAIN = "jsp/main.jsp";
 

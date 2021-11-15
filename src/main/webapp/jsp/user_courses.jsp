@@ -92,10 +92,10 @@
                 <button type="submit" class="btn btn-primary  btn-md">Set new course</button> 
             </form>
 		</div>
-<a href="/w2/controller?command=read_users">Users</a>
-<a href="/w2/controller?command=read_topics">Topics</a>
-<a href="/w2/controller?command=read_userCourses">Courses</a>
-<a href="/w2/controller?command=logout">Logout</a>
+<a href="/optinal-course/controller?command=read_users">Users</a>
+<a href="/optinal-course/controller?command=read_topics">Topics</a>
+<a href="/optinal-course/controller?command=read_userCourses">Courses</a>
+<a href="/optinal-course/controller?command=logout">Logout</a>
 
 	</body>
 </html>

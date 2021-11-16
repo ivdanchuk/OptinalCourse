@@ -5,8 +5,8 @@
 <hr/>
 ${currentUser.f_name}, hello!
 <hr/>
-<a href="/w2/controller?command=read_users">Users</a>
-<a href="/w2/controller?command=read_topics">Topics</a>
-<a href="/w2/controller?command=read_courses">Courses</a>
-<a href="/w2/controller?command=logout">Logout</a>
+<a href="/optinal-course/controller?command=read_users">Users</a>
+<a href="/optinal-course/controller?command=read_topics">Topics</a>
+<a href="/optinal-course/controller?command=read_courses">Courses</a>
+<a href="/optinal-course/controller?command=logout">Logout</a>
 </body></html>

@@ -6,23 +6,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/w2/css/bootstrap.min.css">   		
-        <script src="/w2/js/bootstrap.min.js"></script>     
+        <link rel="stylesheet" href="/optinal-course/css/bootstrap.min.css">   		
+        <script src="/optinal-course/js/bootstrap.min.js"></script>     
     </head>
 
 <body>
         <div class="container">
-            <form action="/w2/controller" method="get"  role="form" data-toggle="validator" >
-                <input type="hidden" id="command" name="command" value="${command}">
-                <input type="hidden" id="userId" name="userId" value="${userId}">
-                <input type="hidden" id="courseId" name="courseId" value="${courseId}">
+            <form action="/optinal-course/controller" method="post"  role="form" data-toggle="validator" >
+                <input type="hidden" id="command" name="command" value="reg_user_for_course">
+                <input type="hidden" id="userId" name="userId" value="${selectedUser.id}">
 
                 <h2>Topic</h2>
                 <div class="form-group col-xs-4">
 
-
-				    <label for="cars">Choose a car:</label>
-					<select id="cars" name="cars">
+				    <label for="course">Choose a course:</label>
+					<select id="courseId" name="courseId">
                             <c:forEach var="course" items="${courses}">
 								<option value="${course.id}">${course.name}</option>
                             </c:forEach>               
@@ -31,7 +29,6 @@
                     <button type="submit" class="btn btn-primary  btn-md">Accept</button> 
                     
                     <table  class="table table-striped">
-
                     <br></br>
                             <thead>
                                 <tr>
@@ -46,12 +43,6 @@
                                 </tr>
                             </thead>
                             <c:forEach var="course" items="${courses}">
-                                <c:set var="classSucess" value=""/>
-                                <c:if test ="${id == course.id}">                        	
-                                    <c:set var="classSucess" value="info"/>
-                                </c:if>
-                                <tr class="${classSucess}">
-                                    
                                     <td>
                                         <a href="controller?id=${course.id}&command=read_course">${course.id}</a>
                                     </td>                                    
@@ -64,11 +55,17 @@
                                     </td>
                                 </tr>
                             </c:forEach>               
-                        </table>  
-              
+                        </table>                
                 </div>                                                      
             </form>
         </div>
+<br	>
+You are logged as: ${currentUser}, role is ${currentRole}  
+<br	>
+User's courses are: ${courses}
+<br>
+Command is ${command}
+
 	</body>
 </html>
 

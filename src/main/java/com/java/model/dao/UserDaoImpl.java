@@ -17,6 +17,7 @@ import com.java.model.entity.User;
 public class UserDaoImpl implements UserDao {
 	private static UserDaoImpl instance;
 	private static final Logger logger = LogManager.getLogger(UserDaoImpl.class.getName());
+	public static final String SQL_SELECT_ALL_USERS_BY_ROLE_ID = "SELECT * FROM users where role_id=?";
 	public static final String SQL_SELECT_ALL_USERS = "SELECT * FROM USERS";
 	public static final String SQL_SELECT_USER = "SELECT * FROM USERS WHERE id=?";
 	public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM USERS WHERE id=?";
@@ -56,6 +57,35 @@ public class UserDaoImpl implements UserDao {
 			throw new DaoException("UserDao#findAll:can't execute findAll method", e);
 		} finally {
 			close(st);
+			close(rs);
+		}
+		return users;
+	}
+
+	@Override
+	public List<User> findUsersByRoleId(Connection conn, Long roleId) throws DaoException {
+		List<User> users = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(SQL_SELECT_ALL_USERS_BY_ROLE_ID);
+			ps.setLong(1, roleId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setId(rs.getLong("id"));
+				user.setF_name(rs.getString("f_name"));
+				user.setL_name(rs.getString("l_name"));
+				user.setEmail(rs.getString("email"));
+				// user.setPassword(rs.getString("password"));
+				user.setRole_id(rs.getLong("role_id"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			logger.fatal("UserDao#findUsersByRoleId SQLException");
+			throw new DaoException("UserDao#can't execute findUsersByRoleId method", e);
+		} finally {
+			close(ps);
 			close(rs);
 		}
 		return users;

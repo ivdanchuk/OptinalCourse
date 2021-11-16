@@ -28,7 +28,6 @@ public class CreateCourse implements ActionCommand {
 		LocalDate end_date = LocalDate.parse(request.getParameter(PARAM_NAME_END_DATE));
 		long topic_id = Long.parseLong(request.getParameter(PARAM_NAME_TOPIC_ID));
 		long user_id = Long.parseLong(request.getParameter(PARAM_NAME_USER_ID));
-
 		Course course = new Course(id, name, duration, start_date, end_date, topic_id, user_id);
 		CourseManager.getInstance().CreateCourse(course);
 		page = Path.COMMAND__READ_COURSES;

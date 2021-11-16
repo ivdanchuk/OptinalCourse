@@ -28,7 +28,10 @@ public class CourseDaoImpl implements CourseDao {
 	public static final String SQL_SELECT_TUTOR_COURSES = "SELECT * FROM courses WHERE user_id=?";
 
 	public static final String SQL_INSERT_COURSE_FOR_USER = "insert into m2m_users_courses (user_id,course_id) values (?,?)";
+	private static final String SQL_DELETE_COURSE_FOR_USER = "delete from m2m_users_courses where (user_id=?)and(course_id=?)";
 
+//	SELECT * from courses
+//	where (user_id =2)and (topic_id=2) order by counter ASC
 	private CourseDaoImpl() {
 	}
 
@@ -37,6 +40,36 @@ public class CourseDaoImpl implements CourseDao {
 			instance = new CourseDaoImpl();
 		}
 		return instance;
+	}
+
+	@Override
+	public List<Course> executeSqlQuery(Connection conn, String SQL) throws DaoException {
+		List<Course> courses = new ArrayList<>();
+		Statement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.createStatement();
+			rs = st.executeQuery(SQL);
+			while (rs.next()) {
+				Course course = new Course();
+				course.setId(rs.getInt("id"));
+				course.setName(rs.getString("name"));
+				course.setStart_date(rs.getDate("start_date").toLocalDate());
+				course.setEnd_date(rs.getDate("end_date").toLocalDate());
+				course.setDuration(rs.getInt("duration"));
+				course.setTopic_id(rs.getLong("topic_id"));
+				course.setUser_id(rs.getLong("user_id"));
+				course.setCounter(rs.getLong("counter"));
+				courses.add(course);
+			}
+		} catch (SQLException e) {
+			logger.fatal("CourseDao#findAll SQLException");
+			throw new DaoException("CourseDao#findAll:can't execute findAll method", e);
+		} finally {
+			close(st);
+			close(rs);
+		}
+		return courses;
 	}
 
 	@Override
@@ -56,6 +89,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setDuration(rs.getInt("duration"));
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
+				course.setCounter(rs.getLong("counter"));
 				courses.add(course);
 			}
 		} catch (SQLException e) {
@@ -85,6 +119,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setDuration(rs.getInt("duration"));
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
+				course.setCounter(rs.getLong("counter"));
 			}
 		} catch (SQLException e) {
 			logger.fatal("CourseDao#findEntity SQLException");
@@ -118,6 +153,24 @@ public class CourseDaoImpl implements CourseDao {
 		} finally {
 			close(ps);
 		}
+	}
+
+	@Override
+	public void deleteCourseForUser(Connection conn, long userId, long courseId) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(SQL_DELETE_COURSE_FOR_USER);
+			ps.setLong(1, userId);
+			ps.setLong(2, courseId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("CourseDao#deleteCourseForUser can't execute create method", e);
+		} finally {
+			close(rs);
+			close(ps);
+		}
+
 	}
 
 	@Override
@@ -207,6 +260,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setDuration(rs.getInt("duration"));
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
+				course.setCounter(rs.getLong("counter"));
 				userCourses.add(course);
 			}
 		} catch (SQLException e) {
@@ -237,6 +291,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setDuration(rs.getInt("duration"));
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
+				course.setCounter(rs.getLong("counter"));
 				userCourses.add(course);
 			}
 		} catch (SQLException e) {
@@ -248,4 +303,5 @@ public class CourseDaoImpl implements CourseDao {
 		}
 		return userCourses;
 	}
+
 }

@@ -7,14 +7,14 @@ import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.entity.User;
 
-public class RegUserForCourse implements ActionCommand {
+public class UnregUserForCourse implements ActionCommand {
 	private static final String PARAM_NAME_COURSE_ID = "courseId";
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		User currenttUser = (User) request.getSession().getAttribute("currentUser");
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
 		long courseId = Long.parseLong(request.getParameter(PARAM_NAME_COURSE_ID));
-		CourseManager.getInstance().registerCourseForUser(currenttUser.getId(), courseId);
+		CourseManager.getInstance().deleteCourseForUser(currentUser.getId(), courseId);
 		return Path.COMMAND__READ_USER_COURSES;
 	}
 }

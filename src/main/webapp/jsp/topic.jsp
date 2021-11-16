@@ -6,13 +6,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="/w2/css/bootstrap.min.css">   		
-        <script src="/w2/js/bootstrap.min.js"></script>     
+        <link rel="stylesheet" href="/optinal-course/css/bootstrap.min.css">   		
+        <script src="/optinal-course/js/bootstrap.min.js"></script>     
     </head>
 
 <body>
         <div class="container">
-            <form action="/w2/controller" method="post"  role="form" data-toggle="validator" >
+            <form action="/optinal-course/controller" method="post"  role="form" data-toggle="validator" >
                 <c:if test ="${empty command}">                        	
                     <c:set var="command" value="create_topic"/>
                 </c:if>

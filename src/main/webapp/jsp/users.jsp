@@ -63,8 +63,7 @@
                                            document.getElementById('id').value = '${user.id}';
                                            document.getElementById('usersForm').submit();"> 
                     	                        <span class="glyphicon glyphicon-trash"/>
-                                        </a>
-                                                   
+                                        </a>                                                   
                                     </td>
                                 </tr>
                             </c:forEach>               
@@ -78,15 +77,19 @@
                     </c:otherwise>
                 </c:choose>                        
             </form>
-            <form action ="jsp/user.jsp">            
+            <form action ="jsp/new_user.jsp">            
                 <br></br>
                 <button type="submit" class="btn btn-primary  btn-md">New user</button> 
             </form>
 		</div>
-<a href="/w2/controller?command=read_users">Users</a>
-<a href="/w2/controller?command=read_topics">Topics</a>
-<a href="/w2/controller?command=read_courses">Courses</a>
-<a href="/w2/controller?command=logout">Logout</a>
-
-	</body>
+<a href="/optinal-course/controller?command=read_users">Users</a>
+<a href="/optinal-course/controller?command=read_topics">Topics</a>
+<a href="/optinal-course/controller?command=read_courses">Courses</a>
+<a href="/optinal-course/controller?command=logout">Logout</a>
+<br>
+You are logged as: ${currentUser}, role is ${currentRole}  
+<br>
+Selected user is: ${selectedUser}
+<br>
+</body>
 </html>

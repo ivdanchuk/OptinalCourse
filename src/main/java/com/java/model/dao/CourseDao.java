@@ -13,4 +13,8 @@ public interface CourseDao extends BaseDao<Long, Course> {
 
 	List<Course> findTutorCourses(Connection conn, long userId) throws DaoException;
 
+	void deleteCourseForUser(Connection conn, long userId, long courseId) throws DaoException;
+
+	List<Course> executeSqlQuery(Connection conn, String SQL) throws DaoException;
+
 }

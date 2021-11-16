@@ -8,20 +8,39 @@
 	<body>
 		<div class="container">
 		<h2>Courses</h2>
-		<!-- -->
-            <!--Search Form -->
-            <form action="controller" method="get" id="seachUsersForm" role="form">
-                <input type="hidden" id="searchAction" name="searchAction" value="searchByName">
-                <div class="form-group col-xs-5">
-                    <input type="text" name="courseName" id="courseName" class="form-control" required="true" placeholder="Type the Name or Last Name of the course"/>                    
-                </div>
-                <button type="submit" class="btn btn-info">
-                    <span class="glyphicon glyphicon-search"></span> Search
-                </button>
-                <br></br>
-                <br></br>
-            </form>
+            <!--Sort option Form--> 
+			<form class="form-inline" action="controller" method="get">
+            <input type="hidden" id="command" name="command" value="sort_courses">
 
+			<div class="form-group mb-2 mr-sm-2">
+		  		<label for="topicId">Select topic:</label>
+		  		<select class="form-control" id="topicId" name="topicId">
+				    <c:forEach var="topic" items = "${topics}">
+				    <option value ="${topic.id}">${topic.name}</option>
+		  			</c:forEach>
+		  		</select>
+
+		  		<label for="tutorId">Select tutor:</label>
+		  		<select class="form-control" id="tutorId" name="tutorId">
+				    <c:forEach var="tutor" items = "${tutors}">
+				    <option value ="${tutor.id}">${tutor.f_name}</option>
+		  			</c:forEach>
+		  		</select>
+			    
+		      <label class="form-check-label" for="radio1">
+		        <input type="radio" class="form-check-input" id="radio1" name="sortOption" value="SortbyName" checked>Name
+		      </label>
+		      <label class="form-check-label" for="radio2">
+		        <input type="radio" class="form-check-input" id="radio2" name="sortOption" value="SortbyDuration">Duration
+		      </label>
+		      <label class="form-check-label" for="radio3">
+		        <input type="radio" class="form-check-input" id="radio3" name="sortOption" value="SortbyCount">Count
+		      </label>
+
+			</div>
+			  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+			</form>
+       
             <!--Users List-->
             <c:if test="${not empty message}">                
                 <div class="alert alert-success">
@@ -44,6 +63,7 @@
                                     <td>End date</td>
                                     <td>Topic id</td>
                                     <td>Tutor id</td>
+                                    <td>Count</td>
 
                                     <td></td>
                                 </tr>
@@ -64,6 +84,7 @@
                                     <td>${course.end_date}</td>
                                     <td>${course.topic_id}</td>
                                     <td>${course.user_id}</td>
+                                    <td>${course.counter}</td>
                                     <td><a href="#" id="delete" 
                                            onclick="document.getElementById('command').value ='delete_course';
                                            document.getElementById('id').value = '${course.id}';
@@ -89,10 +110,17 @@
                 <button type="submit" class="btn btn-primary  btn-md">New course</button> 
             </form>
 		</div>
-<a href="/w2/controller?command=read_users">Users</a>
-<a href="/w2/controller?command=read_topics">Topics</a>
-<a href="/w2/controller?command=read_courses">Courses</a>
-<a href="/w2/controller?command=logout">Logout</a>
+<a href="/optinal-course/controller?command=read_users">Users</a>
+<a href="/optinal-course/controller?command=read_topics">Topics</a>
+<a href="/optinal-course/controller?command=read_courses">Courses</a>
+<a href="/optinal-course/controller?command=logout">Logout</a>
+
+<br	>
+You are logged as ${currentUser}, role is ${currentRole}  
+<br	>
+Selected user is: ${selectedUser}
+<br>
+Tutor's select list ${tutors}
 
 	</body>
 </html>

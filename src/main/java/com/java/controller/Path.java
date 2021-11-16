@@ -12,12 +12,14 @@ public final class Path {
 	public static final String PAGE__LOGIN = "jsp/login.jsp";
 	public static final String PAGE__MAIN = "jsp/main.jsp";
 
-	// public static final String PAGE__ERROR_PAGE = "/WEB-INF/jsp/error_page.jsp";
+	public static final String PAGE__ERROR_PAGE = "/jsp/error.jsp";
 //	public static final String PAGE__LIST_MENU = "/WEB-INF/jsp/client/list_menu.jsp";
 //	public static final String PAGE__LIST_ORDERS = "/WEB-INF/jsp/admin/list_orders.jsp";
 //	public static final String PAGE__SETTINGS = "/WEB-INF/jsp/settings.jsp";
 
 	public static final String PAGE__USER = "jsp/user.jsp";
+	public static final String PAGE__NEW_USER = "jsp/new_user.jsp";
+
 	public static final String PAGE__USERS = "jsp/users.jsp";
 
 	public static final String PAGE__TOPIC = "jsp/topic.jsp";
@@ -30,9 +32,7 @@ public final class Path {
 
 	// courses commands
 
-	// public static final String COMMAND__READ_USER_COURSES =
-	// "controller?command=read_courses";
-
+	// course commands
 	public static final String COMMAND__READ_COURSES = "controller?command=read_courses";
 	public static final String COMMAND__READ_COURSE = "controller?command=read_course";
 	public static final String COMMAND__UPDATE_COURSE = "controller?command=update_course";
@@ -45,12 +45,17 @@ public final class Path {
 	public static final String COMMAND__CREATE_TOPIC = "controller?command=create_topic";
 
 	// user commands
-	public static final String COMMAND__READ_USERS = "controller?command=read_users";
 	public static final String COMMAND__READ_USER = "controller?command=read_user";
+	public static final String COMMAND__READ_USERS = "controller?command=read_users";
+	public static final String COMMAND__READ_USER_COURSES = "controller?command=read_user_courses";
+	public static final String COMMAND__REG_USER_FOR_COURSE = "";
+	public static final String COMMAND__UNREG_USER_FOR_COURSE = "controller?command=unreg_user_for_course";
+
 	public static final String COMMAND__UPDATE_USER = "controller?command=update_user";
 	public static final String COMMAND__CREATE_USER = "controller?command=create_user";
+	// ?
+	public static final String COMMAND__SORT_COURSES = "controller?command=sort_courses";
 
-	// public static final String COMMAND__LIST_ORDERS =
-	// "/controller?command=listOrders";
-//	public static final String COMMAND__LIST_MENU = "/controller?command=listMenu";
+	// public static final String COMMAND__LIST_MENU =
+	// "/controller?command=listMenu";
 }

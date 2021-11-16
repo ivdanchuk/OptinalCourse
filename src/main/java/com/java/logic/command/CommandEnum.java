@@ -2,7 +2,6 @@ package com.java.logic.command;
 
 import com.java.logic.command.course.CreateCourse;
 import com.java.logic.command.course.DeleteCourse;
-import com.java.logic.command.course.PrepareCourseRegForm;
 import com.java.logic.command.course.ReadCourse;
 import com.java.logic.command.course.ReadCourses;
 import com.java.logic.command.course.UpdateCourse;
@@ -17,6 +16,7 @@ import com.java.logic.command.user.ReadUser;
 import com.java.logic.command.user.ReadUserCourses;
 import com.java.logic.command.user.ReadUsers;
 import com.java.logic.command.user.RegUserForCourse;
+import com.java.logic.command.user.UnregUserForCourse;
 import com.java.logic.command.user.UpdateUser;
 
 public enum CommandEnum {
@@ -81,14 +81,33 @@ public enum CommandEnum {
 		}
 	},
 
+	READ_USER {
+		{
+			this.command = new ReadUser();
+		}
+	},
+
 	READ_USERS {
 		{
 			this.command = new ReadUsers();
 		}
 	},
-	READ_COURSES {
+
+	READ_USER_COURSES {
+
 		{
-			this.command = new ReadCourses();
+			this.command = new ReadUserCourses();
+		}
+	},
+
+	REG_USER_FOR_COURSE {
+		{
+			this.command = new RegUserForCourse();
+		}
+	},
+	UNREG_USER_FOR_COURSE {
+		{
+			this.command = new UnregUserForCourse();
 		}
 	},
 
@@ -98,14 +117,9 @@ public enum CommandEnum {
 		}
 	},
 
-	READ_USER {
+	READ_COURSES {
 		{
-			this.command = new ReadUser();
-		}
-	},
-	READ_USER_COURSES {
-		{
-			this.command = new ReadUserCourses();
+			this.command = new ReadCourses();
 		}
 	},
 
@@ -119,14 +133,9 @@ public enum CommandEnum {
 			this.command = new ReadTopic();
 		}
 	},
-	PREPARE_COURSE_REG_FORM {
+	SORT_COURSES {
 		{
-			this.command = new PrepareCourseRegForm();
-		}
-	},
-	REG_USER_FOR_COURSE {
-		{
-			this.command = new RegUserForCourse();
+			this.command = new SortCourses();
 		}
 	};
 
@@ -136,4 +145,5 @@ public enum CommandEnum {
 	public ActionCommand getCurrentCommand() {
 		return command;
 	}
+
 }

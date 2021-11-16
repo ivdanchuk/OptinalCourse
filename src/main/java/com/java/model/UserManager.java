@@ -30,6 +30,26 @@ public class UserManager {
 		return instance;
 	}
 
+	public List<User> listAllUsersByRoleID(long roleId) {
+		Connection conn = null;
+		List<User> users = new ArrayList<>();
+		try {
+			conn = connectionPool.getConnection();
+			users = userDaoImpl.findUsersByRoleId(conn, roleId);
+		} catch (DaoException e) {
+			log.error("UserManager#listAllUsers: can't list users");
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("UserManager#listAllUsers: can't close connection");
+			}
+		}
+		return users;
+	}
+
 	public List<User> listAllUsers() {
 		Connection conn = null;
 		List<User> users = new ArrayList<>();

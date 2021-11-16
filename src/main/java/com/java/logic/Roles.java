@@ -1,4 +1,4 @@
-package com.java.logic.command;
+package com.java.logic;
 
 public interface Roles {
 	public static final String ROLE_ADMIN = "admin";

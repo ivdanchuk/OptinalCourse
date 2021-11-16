@@ -11,6 +11,7 @@ public class Course extends Entity {
 	private LocalDate end_date;
 	private long topic_id;
 	private long user_id;
+	private long counter;
 
 	public Course(long id, String name, int duration, LocalDate start_date, LocalDate end_date, long topic_id,
 			long user_id) {
@@ -21,6 +22,7 @@ public class Course extends Entity {
 		this.end_date = end_date;
 		this.topic_id = topic_id;
 		this.user_id = user_id;
+//		this.count = count;
 	}
 
 	public Course() {
@@ -46,6 +48,20 @@ public class Course extends Entity {
 	 */
 	public int getDuration() {
 		return duration;
+	}
+
+	/**
+	 * @return the counter
+	 */
+	public long getCounter() {
+		return counter;
+	}
+
+	/**
+	 * @param counter the counter to set
+	 */
+	public void setCounter(long counter) {
+		this.counter = counter;
 	}
 
 	/**
@@ -148,6 +164,8 @@ public class Course extends Entity {
 		builder.append(user_id);
 		builder.append(", id=");
 		builder.append(id);
+		builder.append(", count=");
+		builder.append(counter);
 		builder.append("]");
 		return builder.toString();
 	}

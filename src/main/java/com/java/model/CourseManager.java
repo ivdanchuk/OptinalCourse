@@ -30,6 +30,26 @@ public class CourseManager {
 		return instance;
 	}
 
+	public List<Course> executeSqlQuery(String SqlQuery) {
+		Connection conn = null;
+		List<Course> courses = new ArrayList<>();
+		try {
+			conn = connectionPool.getConnection();
+			courses = courseDaoImpl.executeSqlQuery(conn, SqlQuery);
+		} catch (DaoException e) {
+			log.error("CourseManager#listAllCourses: can't list courses");
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("CourseManager#listAllCourses: can't close connection");
+			}
+		}
+		return courses;
+	}
+
 	public List<Course> listAllCourses() {
 		Connection conn = null;
 		List<Course> courses = new ArrayList<>();
@@ -88,6 +108,24 @@ public class CourseManager {
 			}
 		}
 		return userCourses;
+	}
+
+	public void deleteCourseForUser(long userId, long courseId) {
+		Connection conn = null;
+		try {
+			conn = connectionPool.getConnection();
+			courseDaoImpl.deleteCourseForUser(conn, userId, courseId);
+		} catch (DaoException e) {
+			log.error("CourseManager#deleteCourseForUser: can't register course", e);
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("CourseManager#deleteCourseForUser: can't close connection", e);
+			}
+		}
 	}
 
 	public void registerCourseForUser(long userId, long courseId) {

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html><head><title>Login</title></head>
 <body>
-<form name="loginForm" method="POST" action="/w2/controller">
+<form name="loginForm" method="POST" action="/optinal-course/controller">
 <input type="hidden" name="command" value="login" />
 Login:<br/>
 <input type="text" name="login" value=""/>

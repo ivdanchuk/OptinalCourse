@@ -9,10 +9,10 @@
 <body>
         <div class="container">
             	<form action="/optinal-course/controller" method="post" role="form" data-toggle="validator" >
-               	<input type="hidden" id="command" name="command" value="update_course">
-                <input type="hidden" id="id" name="id" value="${course.id}">
+               	<input type="hidden" id="command" name="command" value="create_course">
+                <input type="hidden" id="id" name="id" value="">
                 
-                <h2>Course details</h2>
+                <h2>New course </h2>
                 <div class="form-group col-xs-4">
 
                     <label for="name" class="control-label col-xs-4">Name:</label>
@@ -30,33 +30,18 @@
 					<label for="Topic" class="control-label col-xs-4">Select topic:</label>
 					<select class="form-control" id="topic_id" name="topic_id">
 							<c:forEach var="topic" items="${topics}">
-								<c:choose>
-								    <c:when test="${course.topic_id==topic.id}">
-										<option selected="selected" value="${topic.id}">${topic.name}</option>
-								    </c:when>    
-								    <c:otherwise>
-										<option value="${topic.id}">${topic.name}</option>
-								    </c:otherwise>
-								</c:choose>
-                            </c:forEach>               
-							
+								<option value="${topic.id}">${topic.name}</option>
+                            </c:forEach>               							
 					</select>						
 
 					<label for="Tutor" class="control-label col-xs-4">Select tutor:</label>
 					<select class="form-control" id="user_id" name="user_id">
                             <c:forEach var="tutor" items="${tutors}">
-								<c:choose>
-								    <c:when test="${course.user_id==tutor.id}">
-										<option selected="selected" value="${tutor.id}">${tutor.f_name}</option>
-								    </c:when>    
-								    <c:otherwise>
-										<option value="${tutor.id}">${tutor.f_name}</option>
-								    </c:otherwise>
-								</c:choose>
+								<option value="${tutor.id}">${tutor.f_name}</option>
                             </c:forEach>               
 					</select>						
                     <br></br>
-                    <button type="submit" class="btn btn-primary  btn-md">Update</button> 
+                    <button type="submit" class="btn btn-primary  btn-md">Accept</button> 
                 </div>                                                      
             </form>
         </div>

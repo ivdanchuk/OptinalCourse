@@ -18,6 +18,10 @@ import com.java.logic.command.user.ReadUsers;
 import com.java.logic.command.user.RegUserForCourse;
 import com.java.logic.command.user.UnregUserForCourse;
 import com.java.logic.command.user.UpdateUser;
+import com.java.logic.command.user.readUsersOfCourse;
+import com.java.logic.command.user.setMark;
+import com.java.logic.command.user.showMarkForm;
+import com.java.logic.command.user.showTutorRegForm;
 
 public enum CommandEnum {
 	LOGIN {
@@ -136,6 +140,26 @@ public enum CommandEnum {
 	SORT_COURSES {
 		{
 			this.command = new SortCourses();
+		}
+	},
+	READ_USERS_OF_COURSE {
+		{
+			this.command = new readUsersOfCourse();
+		}
+	},
+	SHOW_TUTOR_REG_FORM {
+		{
+			this.command = new showTutorRegForm();
+		}
+	},
+	SHOW_MARK_FORM {
+		{
+			this.command = new showMarkForm();
+		}
+	},
+	SET_MARK {
+		{
+			this.command = new setMark();
 		}
 	};
 

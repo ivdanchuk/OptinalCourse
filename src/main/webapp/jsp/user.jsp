@@ -35,6 +35,7 @@
                 </div>                                                      
             </form>
         </div>
+<!--  
         		<div class="container">
                 <div class="form-group col-xs-4">
 				        <h4>User's courses:</h4> 
@@ -44,9 +45,8 @@
 	                	</form>
        		 	</div>
         		</div>		
-You are logged as ${currentUser}, role is ${currentRole}  
-<br>
-Command is ${command}
+-->
+You are logged as ${currentUser.email}, your role is ${currentRole.name}
 </body>
 </html>
 

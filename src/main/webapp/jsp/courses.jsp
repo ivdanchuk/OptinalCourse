@@ -5,7 +5,28 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css">   		
 		<script src="js/bootstrap.min.js"></script>       
 	</head>
+
+	<title>W3.CSS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 	<body>
+	  <div class="w3-container">
+	  <h2>Optional course</h2>
+	
+	  <div class="w3-bar w3-light-grey w3-border">
+	    <a href="/optinal-course/controller?command=read_users" class="w3-bar-item w3-button w3-mobile">Users</a>
+		<a href="/optinal-course/controller?command=read_user_courses" class="w3-bar-item w3-button w3-mobile">My learning</a>
+		<a href="/optinal-course/controller?command=show_tutor_reg_form" class="w3-bar-item w3-button w3-mobile">My tutoring</a>
+	    <a href="/optinal-course/controller?command=read_topics" class="w3-bar-item w3-button w3-mobile">University topics</a>
+	    <a href="/optinal-course/controller?command=read_courses" class="w3-bar-item w3-button w3-mobile">University courses</a>
+	    <a href="/optinal-course/controller?command=read_user" class="w3-bar-item w3-button w3-mobile">My account</a>
+	    <a href="/optinal-course/controller?command=logout" class="w3-bar-item w3-button w3-mobile">Logout</a>
+	
+	    <input type="text" class="w3-bar-item w3-input w3-white w3-mobile" placeholder="Search..">
+	    <button class="w3-bar-item w3-button w3-green w3-mobile">Go</button>
+	  </div>
+
 		<div class="container">
 		<h2>Courses</h2>
             <!--Sort option Form--> 
@@ -27,27 +48,19 @@
 		  			</c:forEach>
 		  		</select>
 			    
-		      <label class="form-check-label" for="radio1">
-		        <input type="radio" class="form-check-input" id="radio1" name="sortOption" value="SortbyName" checked>Name
-		      </label>
-		      <label class="form-check-label" for="radio2">
-		        <input type="radio" class="form-check-input" id="radio2" name="sortOption" value="SortbyDuration">Duration
-		      </label>
-		      <label class="form-check-label" for="radio3">
-		        <input type="radio" class="form-check-input" id="radio3" name="sortOption" value="SortbyCount">Count
-		      </label>
-
+			      <label class="form-check-label" for="radio1">
+			        <input type="radio" class="form-check-input" id="radio1" name="sortOption" value="SortbyName" checked>Name
+			      </label>
+			      <label class="form-check-label" for="radio2">
+			        <input type="radio" class="form-check-input" id="radio2" name="sortOption" value="SortbyDuration">Duration
+			      </label>
+			      <label class="form-check-label" for="radio3">
+			        <input type="radio" class="form-check-input" id="radio3" name="sortOption" value="SortbyCount">Count
+			      </label>
 			</div>
 			  <button type="submit" class="btn btn-primary mb-2">Submit</button>
 			</form>
        
-            <!--Users List-->
-            <c:if test="${not empty message}">                
-                <div class="alert alert-success">
-                    ${message}
-                </div>
-            </c:if> 
-    
             <form action="controller" method="post" id="coursesForm" role="form" >              
                 <input type="hidden" id="id" name="id">
                 <input type="hidden" id="command" name="command">
@@ -85,14 +98,9 @@
                                     <td>${course.topic_id}</td>
                                     <td>${course.user_id}</td>
                                     <td>${course.counter}</td>
-                                    <td><a href="#" id="delete" 
-                                           onclick="document.getElementById('command').value ='delete_course';
-                                           document.getElementById('id').value = '${course.id}';
-                                           document.getElementById('coursesForm').submit();"> 
-                    	                        <span class="glyphicon glyphicon-trash"/>
-                                        </a>
-                                                   
-                                    </td>
+                                    <td>
+                                        <a href="controller?id=${course.id}&command=delete_course"><span class="glyphicon glyphicon-trash"/></a>
+                                    </td>                                    
                                 </tr>
                             </c:forEach>               
                         </table>  
@@ -105,22 +113,14 @@
                     </c:otherwise>
                 </c:choose>                        
             </form>
-            <form action ="jsp/course.jsp">            
+            <form action ="jsp/new_course.jsp">            
                 <br></br>
                 <button type="submit" class="btn btn-primary  btn-md">New course</button> 
             </form>
 		</div>
-<a href="/optinal-course/controller?command=read_users">Users</a>
-<a href="/optinal-course/controller?command=read_topics">Topics</a>
-<a href="/optinal-course/controller?command=read_courses">Courses</a>
-<a href="/optinal-course/controller?command=logout">Logout</a>
-
-<br	>
-You are logged as ${currentUser}, role is ${currentRole}  
-<br	>
-Selected user is: ${selectedUser}
+<br> <br>
+You are logged as ${currentUser.email}, role is ${currentRole.name}  
 <br>
-Tutor's select list ${tutors}
-
-	</body>
+<!--  Tutor's select list ${tutors} -->
+</body>
 </html>

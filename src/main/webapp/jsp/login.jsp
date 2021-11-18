@@ -8,6 +8,9 @@ Login:<br/>
 <br/>Password:<br/>
 <input type="password" name="password" value=""/>
 <br/>
+admin@admin.com
+maksym@gmail.com
+ivdanchuk@gmail.com
 ${errorLoginPassMessage}
 <br/>
 ${wrongAction}

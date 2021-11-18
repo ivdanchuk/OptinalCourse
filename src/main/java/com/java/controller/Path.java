@@ -26,9 +26,14 @@ public final class Path {
 	public static final String PAGE__TOPICS = "jsp/topics.jsp";
 
 	public static final String PAGE__COURSE = "jsp/course.jsp";
+	public static final String PAGE__NEW_COURSE = "jsp/new_course.jsp";
+
 	public static final String PAGE__COURSES = "jsp/courses.jsp";
+	public static final String PAGE__REGISTER_TUTOR = "jsp/register_tutor.jsp";
+
 	public static final String PAGE__USER_COURSES = "jsp/user_courses.jsp";
 	public static final String PAGE__USER_REG_COURSE = "jsp/reg_course.jsp";
+	public static final String PAGE___SET_MARK = "jsp/set_mark.jsp";
 
 	// courses commands
 
@@ -55,6 +60,8 @@ public final class Path {
 	public static final String COMMAND__CREATE_USER = "controller?command=create_user";
 	// ?
 	public static final String COMMAND__SORT_COURSES = "controller?command=sort_courses";
+	public static final String COMMAND__READ_USERS_OF_COURSE = "controller?command=read_users_of_course";
+	public static final String COMMAND__SHOW_TUTOR_REG_FORM = "controller?command=show_tutor_reg_form";
 
 	// public static final String COMMAND__LIST_MENU =
 	// "/controller?command=listMenu";

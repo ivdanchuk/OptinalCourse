@@ -34,8 +34,7 @@
                                            document.getElementById('id').value = '${topic.id}';
                                            document.getElementById('topicsForm').submit();"> 
                     	                        <span class="glyphicon glyphicon-trash"/>
-                                        </a>
-                                                   
+                                        </a>                                                 
                                     </td>
                                 </tr>
                             </c:forEach>               
@@ -54,10 +53,5 @@
                 <button type="submit" class="btn btn-primary  btn-md">New topic</button> 
             </form>
 		</div>
-<a href="/optinal-course/controller?command=read_users">Users</a>
-<a href="/optinal-course/controller?command=read_topics">Topics</a>
-<a href="/optinal-course/controller?command=read_courses">Courses</a>
-<a href="/optinal-course/controller?command=logout">Logout</a>
-
 	</body>
 </html>

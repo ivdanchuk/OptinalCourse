@@ -16,13 +16,27 @@ public class ReadUser implements ActionCommand {
 	public String execute(HttpServletRequest request) {
 		// Click on user give us new user ID (selected id)
 		String userId = request.getParameter(PARAM_NAME_ID);
-		User selectedUser = (User) request.getSession().getAttribute("selectedUser");
-		if (selectedUser == null) {
-			selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userId));
+//		User selectedUser = (User) request.getSession().getAttribute("selectedUser");
+//		if (selectedUser == null) {
+//			selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userId));
+//		}
+//		Role role = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
+//		request.getSession().setAttribute("currentRole", role);
+//		request.getSession().setAttribute("currentUser", selectedUser);
+//		return Path.PAGE__USER;
+
+		// Clicked by admin
+		if (userId != null) {
+			User selectedUser = (User) request.getSession().getAttribute("selectedUser");
+			if (selectedUser == null) {
+				selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userId));
+			}
+			Role role = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
+			request.getSession().setAttribute("currentRole", role);
+			request.getSession().setAttribute("currentUser", selectedUser);
+		} else {
+
 		}
-		Role role = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
-		request.getSession().setAttribute("currentRole", role);
-		request.getSession().setAttribute("currentUser", selectedUser);
 		return Path.PAGE__USER;
 	}
 }

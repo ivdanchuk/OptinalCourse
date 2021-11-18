@@ -32,16 +32,19 @@ public class SecurityFilter implements Filter {
 	private static Map<String, List<String>> accessMap = new HashMap<>();
 	private static List<String> commons = new ArrayList<>();
 	private static List<String> outOfControl = new ArrayList<>();
-	private static final String COMMANDS_ADMIN = "CREATE_COURSE UPDATE_COURSE DELETE_COURSE"
-			+ " CREATE_TOPIC UPDATE_TOPIC DELETE_TOPIC" + " CREATE_USER UPDATE_USER DELETE_USER"
-			+ " REG_USER_FOR_COURSE UNREG_USER_FOR_COURSE";
+	private static final String COMMANDS_ADMIN = "CREATE_COURSE READ_COURSE UPDATE_COURSE DELETE_COURSE"
+			+ " CREATE_TOPIC READ_TOPIC UPDATE_TOPIC DELETE_TOPIC"
+			+ " CREATE_USER UPDATE_USER DELETE_USER READ_USERS READ_USER_COURSES"
+			+ " REG_USER_FOR_COURSE UNREG_USER_FOR_COURSE show_tutor_reg_form read_users_of_course show_mark_form";
 
-	private static final String COMMANDS_STUDENT = "REG_USER_FOR_COURSE UNREG_USER_FOR_COURSE";
+	private static final String COMMANDS_STUDENT = "REG_USER_FOR_COURSE UNREG_USER_FOR_COURSE READ_USER_COURSES";
 
-	private static final String COMMANDS_TUTOR = "UPDATE_COURSE CREATE_COURSE";
+	private static final String COMMANDS_TUTOR = "READ_COURSE UPDATE_COURSE CREATE_COURSE DELETE_COURSE READ_TOPIC"
+			+ " show_tutor_reg_form read_users_of_course show_mark_form set_mark";
 
-	private static final String COMMANDS_COMMON = "LOGOUT READ_USER READ_USERS UPDATE_USER read_user_courses "
-			+ " READ_COURSE READ_COURSES READ_TOPIC READ_TOPICS sort_courses";
+	private static final String COMMANDS_COMMON = "LOGOUT READ_USER  UPDATE_USER "
+			+ " READ_COURSES READ_TOPICS sort_courses";
+
 	private static final String COMMANDS_OUT_OF_CONTROL = "LOGIN";
 
 	// read_courses

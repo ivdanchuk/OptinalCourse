@@ -89,7 +89,5 @@
 <br>
 You are logged as: ${currentUser}, role is ${currentRole}  
 <br>
-Selected user is: ${selectedUser}
-<br>
 </body>
 </html>

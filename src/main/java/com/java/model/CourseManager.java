@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.java.model.dao.CourseDaoImpl;
 import com.java.model.entity.Course;
+import com.java.model.entity.UserOfCourse;
 
 public class CourseManager {
 	private static CourseManager instance;
@@ -90,6 +91,26 @@ public class CourseManager {
 		return userCourses;
 	}
 
+	public List<UserOfCourse> findCourseUsers(long courseId) {
+		Connection conn = null;
+		List<UserOfCourse> usersOfCourse = new ArrayList<>();
+		try {
+			conn = connectionPool.getConnection();
+			usersOfCourse = courseDaoImpl.findCourseUsers(conn, courseId);
+		} catch (DaoException e) {
+			log.error("CourseManager#findUserCourses: can't find user's courses");
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("CourseManager#findUserCourses: can't close connection");
+			}
+		}
+		return usersOfCourse;
+	}
+
 	public List<Course> findStudentCourses(long userId) {
 		Connection conn = null;
 		List<Course> userCourses = new ArrayList<>();
@@ -160,6 +181,24 @@ public class CourseManager {
 				}
 			} catch (SQLException e) {
 				log.error("CourseManager#CreateCourse: can't close connection", e);
+			}
+		}
+	}
+
+	public void SetMark(long userId, long courseId, int mark) {
+		Connection conn = null;
+		try {
+			conn = connectionPool.getConnection();
+			courseDaoImpl.setMark(conn, userId, courseId, mark);
+		} catch (DaoException e) {
+			log.error("CourseManager#SetMark: can't set mark", e);
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("CourseManager#SetMark: can't close connection", e);
 			}
 		}
 	}

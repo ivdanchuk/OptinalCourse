@@ -31,16 +31,6 @@ public class CreateCourse implements ActionCommand {
 		Course course = new Course(id, name, duration, start_date, end_date, topic_id, user_id);
 		CourseManager.getInstance().CreateCourse(course);
 		page = Path.COMMAND__READ_COURSES;
-
-//			if (LoginLogic.checkLogin(login, pass)) {
-//				request.setAttribute("user", login);
-//				page = ConfigurationManager.getProperty("path.page.main");
-//			} else {
-//				request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
-//				page = ConfigurationManager.getProperty("path.page.login");
-//			}
 		return page;
-
 	}
-
 }

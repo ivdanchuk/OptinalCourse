@@ -6,7 +6,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.java.controller.Path;
-import com.java.logic.Roles;
 import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.entity.Role;
@@ -22,13 +21,9 @@ public class ReadUserCourses implements ActionCommand {
 		User currentUser = (User) request.getSession().getAttribute("currentUser");
 		Role currentRole = (Role) request.getSession().getAttribute("currentRole");
 		request.setAttribute("userId", userId);
-
-		if (currentRole.getName().equals(Roles.ROLE_TUTOR)) {
-			request.setAttribute("userCourses", CourseManager.getInstance().findTutorCourses(currentUser.getId()));
-
-		} else if (currentRole.getName().equals(Roles.ROLE_STUDENT)) {
-			request.setAttribute("userCourses", CourseManager.getInstance().findStudentCourses(currentUser.getId()));
-		}
-		return Path.PAGE__USER_COURSES;
+		String path = Path.PAGE__ERROR_PAGE;
+		request.setAttribute("userCourses", CourseManager.getInstance().findStudentCourses(currentUser.getId()));
+		path = Path.PAGE__USER_COURSES;
+		return path;
 	}
 }

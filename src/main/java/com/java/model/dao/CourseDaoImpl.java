@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.java.model.DaoException;
 import com.java.model.entity.Course;
+import com.java.model.entity.UserOfCourse;
 
 public class CourseDaoImpl implements CourseDao {
 	private static final Logger logger = LogManager.getLogger(CourseDaoImpl.class.getName());
@@ -23,15 +24,22 @@ public class CourseDaoImpl implements CourseDao {
 	public static final String SQL_DELETE_COURSE_BY_ID = "DELETE FROM COURSES WHERE id=?";
 	public static final String SQL_UPDATE_COURSE_BY_ID = "UPDATE COURSES SET name=?,duration=?,start_date=?,end_date=?,topic_id=?,user_id=?  WHERE id=?";
 	public static final String SQL_INSERT_COURSE = "INSERT INTO COURSES (name,duration,start_date,end_date,topic_id,user_id)values (?,?,?,?,?,?)";
-	public static final String SQL_SELECT_STUDENT_COURSES = "SELECT * FROM courses WHERE id in \r\n"
-			+ "(SELECT course_id FROM m2m_users_courses where user_id=?)";
 	public static final String SQL_SELECT_TUTOR_COURSES = "SELECT * FROM courses WHERE user_id=?";
 
 	public static final String SQL_INSERT_COURSE_FOR_USER = "insert into m2m_users_courses (user_id,course_id) values (?,?)";
 	private static final String SQL_DELETE_COURSE_FOR_USER = "delete from m2m_users_courses where (user_id=?)and(course_id=?)";
+	public static final String SQL_SELECT_STUDENT_COURSES = "SELECT * FROM courses WHERE id in \r\n"
+			+ "(SELECT course_id FROM m2m_users_courses where user_id=?)";
+	// private static final String SQL_SELECT_COURSE_STUDENTS = "SELECT * FROM
+	// m2m_users_courses inner join users on users.id = user_id \r\n"
+	// + "where course_id=?";
+	// private static final String SQL_SELECT_COURSE_STUDENTS = "SELECT * FROM
+	// db_a.m2m_users_courses where course_id=?";
+	private static final String SQL_SELECT_COURSE_STUDENTS = "SELECT user_id, course_id, mark, reg_date, users.email, users.f_name, users.l_name, users.role_id FROM m2m_users_courses inner join users on users.id = user_id \r\n"
+			+ "			where course_id=?\r\n" + "";
 
-//	SELECT * from courses
-//	where (user_id =2)and (topic_id=2) order by counter ASC
+	private static final String SQL_UPDATE_MARK = "UPDATE m2m_users_courses SET MARK=? WHERE (user_id=?) and (course_id=?)";
+
 	private CourseDaoImpl() {
 	}
 
@@ -40,6 +48,24 @@ public class CourseDaoImpl implements CourseDao {
 			instance = new CourseDaoImpl();
 		}
 		return instance;
+	}
+
+	@Override
+	public void setMark(Connection conn, long userId, long courseId, int mark) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(SQL_UPDATE_MARK);
+			ps.setLong(1, mark);
+			ps.setLong(2, userId);
+			ps.setLong(3, courseId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("CourseDao#can't execute setMark method", e);
+		} finally {
+			close(rs);
+			close(ps);
+		}
 	}
 
 	@Override
@@ -70,6 +96,39 @@ public class CourseDaoImpl implements CourseDao {
 			close(rs);
 		}
 		return courses;
+	}
+
+	@Override
+	public List<UserOfCourse> findCourseUsers(Connection conn, long courseId) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<UserOfCourse> usersOfCourse = new ArrayList<>();
+		try {
+			ps = conn.prepareStatement(SQL_SELECT_COURSE_STUDENTS);
+			ps.setLong(1, courseId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				UserOfCourse userOfCourse = new UserOfCourse();
+				// first table
+				userOfCourse.setUser_id(rs.getInt("user_id"));
+				userOfCourse.setCourse_id(rs.getInt("course_id"));
+				userOfCourse.setMark(rs.getInt("mark"));
+				userOfCourse.setReg_date(rs.getDate("reg_date").toLocalDate());
+				// second table
+				userOfCourse.setF_name(rs.getString("f_name"));
+				userOfCourse.setL_name(rs.getString("l_name"));
+				userOfCourse.setEmail(rs.getString("email"));
+				userOfCourse.setRole_id(rs.getInt("role_id"));
+				usersOfCourse.add(userOfCourse);
+			}
+		} catch (SQLException e) {
+			logger.fatal("CourseDao#findAll SQLException");
+			throw new DaoException("CourseDao#findAll:can't execute findAll method", e);
+		} finally {
+			close(ps);
+			close(rs);
+		}
+		return usersOfCourse;
 	}
 
 	@Override

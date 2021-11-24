@@ -11,15 +11,19 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.java.logic.CourseState;
 import com.java.model.DaoException;
+import com.java.model.dto.CourseOfStudent;
+import com.java.model.dto.StudentOfCourse;
 import com.java.model.entity.Course;
-import com.java.model.entity.UserOfCourse;
 
 public class CourseDaoImpl implements CourseDao {
 	private static final Logger logger = LogManager.getLogger(CourseDaoImpl.class.getName());
 	private static CourseDaoImpl instance;
 
 	public static final String SQL_SELECT_ALL_COURSES = "SELECT * FROM COURSES";
+	public static final String SQL_SELECT_ALL_NOT_STARTED_COURSES = "SELECT * FROM COURSES WHERE state=?";
+
 	public static final String SQL_SELECT_COURSE = "SELECT * FROM COURSES WHERE id=?";
 	public static final String SQL_DELETE_COURSE_BY_ID = "DELETE FROM COURSES WHERE id=?";
 	public static final String SQL_UPDATE_COURSE_BY_ID = "UPDATE COURSES SET name=?,duration=?,start_date=?,end_date=?,topic_id=?,user_id=?  WHERE id=?";
@@ -28,17 +32,15 @@ public class CourseDaoImpl implements CourseDao {
 
 	public static final String SQL_INSERT_COURSE_FOR_USER = "insert into m2m_users_courses (user_id,course_id) values (?,?)";
 	private static final String SQL_DELETE_COURSE_FOR_USER = "delete from m2m_users_courses where (user_id=?)and(course_id=?)";
-	public static final String SQL_SELECT_STUDENT_COURSES = "SELECT * FROM courses WHERE id in \r\n"
-			+ "(SELECT course_id FROM m2m_users_courses where user_id=?)";
-	// private static final String SQL_SELECT_COURSE_STUDENTS = "SELECT * FROM
-	// m2m_users_courses inner join users on users.id = user_id \r\n"
-	// + "where course_id=?";
-	// private static final String SQL_SELECT_COURSE_STUDENTS = "SELECT * FROM
-	// db_a.m2m_users_courses where course_id=?";
-	private static final String SQL_SELECT_COURSE_STUDENTS = "SELECT user_id, course_id, mark, reg_date, users.email, users.f_name, users.l_name, users.role_id FROM m2m_users_courses inner join users on users.id = user_id \r\n"
-			+ "			where course_id=?\r\n" + "";
 
 	private static final String SQL_UPDATE_MARK = "UPDATE m2m_users_courses SET MARK=? WHERE (user_id=?) and (course_id=?)";
+
+	public static final String SQL_SELECT_COURSES_FOR_STUDENT = "select courses.id,courses.name,courses.duration,courses.start_date,courses.end_date,\r\n"
+			+ "courses.topic_id,courses.user_id, courses.counter,courses.state,m2m_users_courses.mark, m2m_users_courses.reg_date \r\n"
+			+ "from courses inner join m2m_users_courses on m2m_users_courses.course_id=courses.id where m2m_users_courses.user_id=?";
+
+	private static final String SQL_SELECT_COURSE_STUDENTS = "SELECT user_id, course_id, mark, reg_date, users.email, users.f_name, users.l_name, users.role_id FROM m2m_users_courses inner join users on users.id = user_id \r\n"
+			+ "where course_id=?\r\n" + "";
 
 	private CourseDaoImpl() {
 	}
@@ -51,7 +53,7 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public void setMark(Connection conn, long userId, long courseId, int mark) throws DaoException {
+	public void setMarkForStudent(Connection conn, long userId, long courseId, int mark) throws DaoException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -99,16 +101,16 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public List<UserOfCourse> findCourseUsers(Connection conn, long courseId) throws DaoException {
+	public List<StudentOfCourse> findCourseUsers(Connection conn, long courseId) throws DaoException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<UserOfCourse> usersOfCourse = new ArrayList<>();
+		List<StudentOfCourse> usersOfCourse = new ArrayList<>();
 		try {
 			ps = conn.prepareStatement(SQL_SELECT_COURSE_STUDENTS);
 			ps.setLong(1, courseId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				UserOfCourse userOfCourse = new UserOfCourse();
+				StudentOfCourse userOfCourse = new StudentOfCourse();
 				// first table
 				userOfCourse.setUser_id(rs.getInt("user_id"));
 				userOfCourse.setCourse_id(rs.getInt("course_id"));
@@ -156,6 +158,37 @@ public class CourseDaoImpl implements CourseDao {
 			throw new DaoException("CourseDao#findAll:can't execute findAll method", e);
 		} finally {
 			close(st);
+			close(rs);
+		}
+		return courses;
+	}
+
+	@Override
+	public List<Course> findAllNotStartedCourses(Connection conn) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<Course> courses = new ArrayList<>();
+		try {
+			ps = conn.prepareStatement(SQL_SELECT_ALL_NOT_STARTED_COURSES);
+			ps.setLong(1, CourseState.COURSE_NOTSTARTED);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				Course course = new Course();
+				course.setId(rs.getInt("id"));
+				course.setName(rs.getString("name"));
+				course.setStart_date(rs.getDate("start_date").toLocalDate());
+				course.setEnd_date(rs.getDate("end_date").toLocalDate());
+				course.setDuration(rs.getInt("duration"));
+				course.setTopic_id(rs.getLong("topic_id"));
+				course.setUser_id(rs.getLong("user_id"));
+				course.setCounter(rs.getLong("counter"));
+				courses.add(course);
+			}
+		} catch (SQLException e) {
+			logger.fatal("CourseDao#findAllNotStartedCourses SQLException");
+			throw new DaoException("CourseDao#can'course execute findEntity method", e);
+		} finally {
+			close(ps);
 			close(rs);
 		}
 		return courses;
@@ -215,7 +248,7 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public void deleteCourseForUser(Connection conn, long userId, long courseId) throws DaoException {
+	public void unregisterStudentForCourse(Connection conn, long userId, long courseId) throws DaoException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -233,7 +266,7 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public void registerCourseForUser(Connection conn, long userId, long courseId) throws DaoException {
+	public void registerStudentForCourse(Connection conn, long userId, long courseId) throws DaoException {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
@@ -333,16 +366,21 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public List<Course> findStudentCourses(Connection conn, long userId) throws DaoException {
-		List<Course> userCourses = new ArrayList<>();
+	public List<CourseOfStudent> findCoursesOfStudentWithStateFilter(Connection conn, long userId, int state)
+			throws DaoException {
+		List<CourseOfStudent> userCourses = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		String sqlQuery = SQL_SELECT_COURSES_FOR_STUDENT;
+		if (state != 0) {
+			sqlQuery = sqlQuery + " and state=" + state;
+		}
 		try {
-			ps = conn.prepareStatement(SQL_SELECT_STUDENT_COURSES);
+			ps = conn.prepareStatement(sqlQuery);
 			ps.setLong(1, userId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				Course course = new Course();
+				CourseOfStudent course = new CourseOfStudent();
 				course.setId(rs.getInt("id"));
 				course.setName(rs.getString("name"));
 				course.setStart_date(rs.getDate("start_date").toLocalDate());
@@ -350,7 +388,10 @@ public class CourseDaoImpl implements CourseDao {
 				course.setDuration(rs.getInt("duration"));
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
-				course.setCounter(rs.getLong("counter"));
+				course.setCounter(rs.getInt("counter"));
+				course.setState(rs.getInt("state"));
+				course.setMark(rs.getInt("mark"));
+				course.setReg_date(rs.getDate("reg_date").toLocalDate());
 				userCourses.add(course);
 			}
 		} catch (SQLException e) {
@@ -363,4 +404,37 @@ public class CourseDaoImpl implements CourseDao {
 		return userCourses;
 	}
 
+	@Override
+	public List<CourseOfStudent> findAllStudentCourses(Connection conn, long userId) throws DaoException {
+		List<CourseOfStudent> userCourses = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(SQL_SELECT_COURSES_FOR_STUDENT);
+			ps.setLong(1, userId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				CourseOfStudent course = new CourseOfStudent();
+				course.setId(rs.getInt("id"));
+				course.setName(rs.getString("name"));
+				course.setStart_date(rs.getDate("start_date").toLocalDate());
+				course.setEnd_date(rs.getDate("end_date").toLocalDate());
+				course.setDuration(rs.getInt("duration"));
+				course.setTopic_id(rs.getLong("topic_id"));
+				course.setUser_id(rs.getLong("user_id"));
+				course.setCounter(rs.getInt("counter"));
+				course.setState(rs.getInt("state"));
+				course.setMark(rs.getInt("mark"));
+				course.setReg_date(rs.getDate("reg_date").toLocalDate());
+				userCourses.add(course);
+			}
+		} catch (SQLException e) {
+			logger.fatal("CourseDao#findUserCourses SQLException");
+			throw new DaoException("CourseDao#findUserCourses:can't execute findStudentCourses method", e);
+		} finally {
+			close(ps);
+			close(rs);
+		}
+		return userCourses;
+	}
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.java.controller.Path;
+import com.java.logic.Roles;
 import com.java.model.CourseManager;
 import com.java.model.RoleManager;
 import com.java.model.TopicManager;
@@ -21,38 +22,54 @@ public class LoginCommand implements ActionCommand {
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		String page = null;
+		String page = Path.PAGE__LOGIN;
+		User currentUser = null;
+
 		String login = request.getParameter(PARAM_NAME_LOGIN);
 		String pass = request.getParameter(PARAM_NAME_PASSWORD);
+		User user = UserManager.getInstance().FindUserByEmail(login);
+		if (user.getEmail() == null) {
+			request.getSession().setAttribute("errorLoginPassMessage",
+					MessageManager.getProperty("message.loginnotexist"));
+			return page;
+		}
 
-		List<User> dbUsers = new ArrayList<>();
-		dbUsers = UserManager.getInstance().listAllUsers();
+		if ((user.getEmail().equals(login)) && (user.getPassword().equals(pass))) {
+			if (user.getRole_id() != Roles.ROLE_BLOCED_ID) {
+				currentUser = user;
+				page = Path.PAGE__MAIN;
+			} else {
+				request.getSession().setAttribute("errorLoginPassMessage",
+						MessageManager.getProperty("message.loginblocked"));
+			}
+		} else {
+			request.getSession().setAttribute("errorLoginPassMessage",
+					MessageManager.getProperty("message.loginerror"));
+		}
 
-		List<Topic> topics = new ArrayList<>();
-		topics = TopicManager.getInstance().listAllTopics();
-
-		List<User> tutors = new ArrayList<>();
-		tutors = UserManager.getInstance().listAllUsersByRoleID(2l);
-
-		List<Course> courses = new ArrayList<>();
-		courses = CourseManager.getInstance().listAllCourses();
-
-		// Role currentRole = null;
-		User currentUser = LoginLogic.checkLogin(login, pass, dbUsers);
 		if (currentUser != null) {
 			Role currentRole = RoleManager.getInstance().FindRoleById(currentUser.getRole_id());
 			request.getSession().setAttribute("currentUser", currentUser);
 			request.getSession().setAttribute("currentRole", currentRole);
+
+			List<Topic> topics = new ArrayList<>();
+			topics = TopicManager.getInstance().listAllTopics();
 			request.getSession().setAttribute("topics", topics);
+
+			List<Course> courses = new ArrayList<>();
+			courses = CourseManager.getInstance().findAllCourses();
 			request.getSession().setAttribute("courses", courses);
+
+			List<Course> coursesNotStarted = new ArrayList<>();
+			coursesNotStarted = CourseManager.getInstance().findAllNotStartedCourses();
+			request.getSession().setAttribute("coursesNotStarted", coursesNotStarted);
+
+			List<User> tutors = new ArrayList<>();
+			tutors = UserManager.getInstance().listAllUsersByRoleID(2l);
 			request.getSession().setAttribute("tutors", tutors);
-			page = Path.PAGE__MAIN;
-		} else {
-//			request.getSession().setAttribute("errorLoginPassMessage",
-//					MessageManager.getProperty("message.loginerror"));
-			request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
-			page = Path.PAGE__LOGIN;
-			// page = ConfigurationManager.getProperty("....");
+
+			// By default
+			request.getSession().setAttribute("defaultLocale", "en");
 		}
 		return page;
 	}

@@ -2,63 +2,94 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 	<head>
-		<link rel="stylesheet" href="css/bootstrap.min.css">   		
-		<script src="js/bootstrap.min.js"></script>       
 	</head>
-
-	<title>W3.CSS</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+	<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
 	<body>
-	  <div class="w3-container">
-	  <h2>Optional course</h2>
-	
-	  <div class="w3-bar w3-light-grey w3-border">
-	    <a href="/optinal-course/controller?command=read_users" class="w3-bar-item w3-button w3-mobile">Users</a>
-		<a href="/optinal-course/controller?command=read_user_courses" class="w3-bar-item w3-button w3-mobile">My learning</a>
-		<a href="/optinal-course/controller?command=show_tutor_reg_form" class="w3-bar-item w3-button w3-mobile">My tutoring</a>
-	    <a href="/optinal-course/controller?command=read_topics" class="w3-bar-item w3-button w3-mobile">University topics</a>
-	    <a href="/optinal-course/controller?command=read_courses" class="w3-bar-item w3-button w3-mobile">University courses</a>
-	    <a href="/optinal-course/controller?command=read_user" class="w3-bar-item w3-button w3-mobile">My account</a>
-	    <a href="/optinal-course/controller?command=logout" class="w3-bar-item w3-button w3-mobile">Logout</a>
-	
-	    <input type="text" class="w3-bar-item w3-input w3-white w3-mobile" placeholder="Search..">
-	    <button class="w3-bar-item w3-button w3-green w3-mobile">Go</button>
-	  </div>
-
 		<div class="container">
 		<h2>Courses</h2>
-            <!--Sort option Form--> 
+
+            <!--Select & sort option Form--> 
 			<form class="form-inline" action="controller" method="get">
             <input type="hidden" id="command" name="command" value="sort_courses">
-
 			<div class="form-group mb-2 mr-sm-2">
 		  		<label for="topicId">Select topic:</label>
 		  		<select class="form-control" id="topicId" name="topicId">
+						<c:choose>
+						     <c:when test="${topicIdForSorting == '0' }" >
+								<option selected="selected" value ="0">All topics</option>
+						     </c:when>
+						     <c:otherwise>
+								<option value ="0">All topics</option>
+						     </c:otherwise>
+						 </c:choose>
+					     						     					
 				    <c:forEach var="topic" items = "${topics}">
-				    <option value ="${topic.id}">${topic.name}</option>
+						<c:choose>
+						     <c:when test="${topic.id == topicIdForSorting}" >
+								<option selected="selected" value ="${topic.id}">${topic.name}</option>
+						     </c:when>
+						     <c:otherwise>
+								<option value ="${topic.id}">${topic.name}</option>
+						     </c:otherwise>
+						 </c:choose>
 		  			</c:forEach>
 		  		</select>
 
 		  		<label for="tutorId">Select tutor:</label>
 		  		<select class="form-control" id="tutorId" name="tutorId">
 				    <c:forEach var="tutor" items = "${tutors}">
-				    <option value ="${tutor.id}">${tutor.f_name}</option>
+						<option value ="0">All tutors</option>
+						<c:choose>
+						     <c:when test="${tutor.id == tutorIdForSorting}" >
+				    			<option selected="selected" value ="${tutor.id}">${tutor.f_name}</option>
+						     </c:when>
+						     <c:otherwise>
+				    			<option value ="${tutor.id}">${tutor.f_name}</option>
+						     </c:otherwise>
+						 </c:choose>
 		  			</c:forEach>
 		  		</select>
-			    
-			      <label class="form-check-label" for="radio1">
-			        <input type="radio" class="form-check-input" id="radio1" name="sortOption" value="SortbyName" checked>Name
-			      </label>
-			      <label class="form-check-label" for="radio2">
-			        <input type="radio" class="form-check-input" id="radio2" name="sortOption" value="SortbyDuration">Duration
-			      </label>
+
+				<c:if test ="${empty sortOptionForSorting}">                        	
+					<c:set var="sortOptionForSorting" scope="session" value="SortbyName"/>
+				</c:if>
+
+				  <label class="form-check-label" for="radio1">
+						<c:choose>
+						     <c:when test="${sortOptionForSorting == 'SortbyName'}" >
+			        			<input type="radio" class="form-check-input" id="radio1" name="sortOption" value="SortbyName" checked>Course name
+						     </c:when>
+						     <c:otherwise>
+			        			<input type="radio" class="form-check-input" id="radio1" name="sortOption" value="SortbyName">Course name
+						     </c:otherwise>
+						 </c:choose>
+				</label>
+
+				  <label class="form-check-label" for="radio2">
+						<c:choose>
+						     <c:when test="${sortOptionForSorting == 'SortbyDuration'}" >
+			        			<input type="radio" class="form-check-input" id="radio2" name="sortOption" value="SortbyDuration" checked>Duration
+						     </c:when>
+						     <c:otherwise>
+			        			<input type="radio" class="form-check-input" id="radio2" name="sortOption" value="SortbyDuration">Duration
+						     </c:otherwise>
+						 </c:choose>
+				</label>
+
 			      <label class="form-check-label" for="radio3">
-			        <input type="radio" class="form-check-input" id="radio3" name="sortOption" value="SortbyCount">Count
+						<c:choose>
+						     <c:when test="${sortOptionForSorting == 'SortbyCount'}" >
+			        			<input type="radio" class="form-check-input" id="radio3" name="sortOption" value="SortbyCount" checked>Registered
+						     </c:when>
+						     <c:otherwise>
+			        			<input type="radio" class="form-check-input" id="radio3" name="sortOption" value="SortbyCount">Registered
+						     </c:otherwise>
+						 </c:choose>			        		
 			      </label>
+			    
+
 			</div>
-			  <button type="submit" class="btn btn-primary mb-2">Submit</button>
+			  <button type="submit" class="btn btn-primary mb-2">Filter & sort courses</button>
 			</form>
        
             <form action="controller" method="post" id="coursesForm" role="form" >              
@@ -70,13 +101,13 @@
                             <thead>
                                 <tr>
                                     <td>#</td>
-                                    <td>Name</td>
+                                    <td>Course name</td>
                                     <td>Duration</td>
                                     <td>Start date</td>
                                     <td>End date</td>
-                                    <td>Topic id</td>
-                                    <td>Tutor id</td>
-                                    <td>Count</td>
+                                    <td>Topic</td>
+                                    <td>Tutor</td>
+                                    <td>Registered</td>
 
                                     <td></td>
                                 </tr>
@@ -95,8 +126,21 @@
                                     <td>${course.duration}</td>
                                     <td>${course.start_date}</td>
                                     <td>${course.end_date}</td>
-                                    <td>${course.topic_id}</td>
-                                    <td>${course.user_id}</td>
+
+                                    <!--  <td>${course.topic_id}</td> -->
+									<c:forEach var="topic" items="${sessionScope.topics}">
+										<c:if test ="${course.topic_id==topic.id}">                        	
+                                    		<td>${topic.name}</td>
+										</c:if>
+		                            </c:forEach>               
+
+                                    <!-- <td>${course.user_id}</td> -->
+									<c:forEach var="tutor" items="${sessionScope.tutors}">
+										<c:if test ="${course.user_id==tutor.id}">                        	
+                                    		<td>${tutor.l_name}</td>
+										</c:if>
+		                            </c:forEach>               
+
                                     <td>${course.counter}</td>
                                     <td>
                                         <a href="controller?id=${course.id}&command=delete_course"><span class="glyphicon glyphicon-trash"/></a>
@@ -118,9 +162,6 @@
                 <button type="submit" class="btn btn-primary  btn-md">New course</button> 
             </form>
 		</div>
-<br> <br>
-You are logged as ${currentUser.email}, role is ${currentRole.name}  
-<br>
-<!--  Tutor's select list ${tutors} -->
 </body>
 </html>
+	<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>

@@ -8,11 +8,14 @@ package com.java.controller;
  */
 public final class Path {
 
+	public static final String LOCALE_NAME_RU = "ru";
+	public static final String LOCALE_NAME_EN = "en";
+
 	// pagesefe
 	public static final String PAGE__LOGIN = "jsp/login.jsp";
 	public static final String PAGE__MAIN = "jsp/main.jsp";
 
-	public static final String PAGE__ERROR_PAGE = "/jsp/error.jsp";
+	public static final String PAGE__ERROR_PAGE = "jsp/error.jsp";
 //	public static final String PAGE__LIST_MENU = "/WEB-INF/jsp/client/list_menu.jsp";
 //	public static final String PAGE__LIST_ORDERS = "/WEB-INF/jsp/admin/list_orders.jsp";
 //	public static final String PAGE__SETTINGS = "/WEB-INF/jsp/settings.jsp";
@@ -50,8 +53,12 @@ public final class Path {
 	public static final String COMMAND__CREATE_TOPIC = "controller?command=create_topic";
 
 	// user commands
+	public static final String COMMAND__READ_CURRENT_USER = "controller?command=read_current_user";
+
 	public static final String COMMAND__READ_USER = "controller?command=read_user";
 	public static final String COMMAND__READ_USERS = "controller?command=read_users";
+	public static final String COMMAND__READ_USERS2 = "controller?command=read_users2";
+
 	public static final String COMMAND__READ_USER_COURSES = "controller?command=read_user_courses";
 	public static final String COMMAND__REG_USER_FOR_COURSE = "";
 	public static final String COMMAND__UNREG_USER_FOR_COURSE = "controller?command=unreg_user_for_course";

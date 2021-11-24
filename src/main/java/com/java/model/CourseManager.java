@@ -9,8 +9,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.java.model.dao.CourseDaoImpl;
+import com.java.model.dto.CourseOfStudent;
+import com.java.model.dto.StudentOfCourse;
 import com.java.model.entity.Course;
-import com.java.model.entity.UserOfCourse;
 
 public class CourseManager {
 	private static CourseManager instance;
@@ -51,7 +52,27 @@ public class CourseManager {
 		return courses;
 	}
 
-	public List<Course> listAllCourses() {
+	public List<Course> findAllNotStartedCourses() {
+		Connection conn = null;
+		List<Course> courses = new ArrayList<>();
+		try {
+			conn = connectionPool.getConnection();
+			courses = courseDaoImpl.findAllNotStartedCourses(conn);
+		} catch (DaoException e) {
+			log.error("CourseManager#listAllCourses: can't list courses");
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("CourseManager#listAllCourses: can't close connection");
+			}
+		}
+		return courses;
+	}
+
+	public List<Course> findAllCourses() {
 		Connection conn = null;
 		List<Course> courses = new ArrayList<>();
 		try {
@@ -91,9 +112,9 @@ public class CourseManager {
 		return userCourses;
 	}
 
-	public List<UserOfCourse> findCourseUsers(long courseId) {
+	public List<StudentOfCourse> findCourseUsers(long courseId) {
 		Connection conn = null;
-		List<UserOfCourse> usersOfCourse = new ArrayList<>();
+		List<StudentOfCourse> usersOfCourse = new ArrayList<>();
 		try {
 			conn = connectionPool.getConnection();
 			usersOfCourse = courseDaoImpl.findCourseUsers(conn, courseId);
@@ -111,12 +132,32 @@ public class CourseManager {
 		return usersOfCourse;
 	}
 
-	public List<Course> findStudentCourses(long userId) {
+	public List<CourseOfStudent> findCoursesOfStudentWithStateFilter(long userId, int state) {
 		Connection conn = null;
-		List<Course> userCourses = new ArrayList<>();
+		List<CourseOfStudent> userCourses = new ArrayList<>();
 		try {
 			conn = connectionPool.getConnection();
-			userCourses = courseDaoImpl.findStudentCourses(conn, userId);
+			userCourses = courseDaoImpl.findCoursesOfStudentWithStateFilter(conn, userId, state);
+		} catch (DaoException e) {
+			log.error("CourseManager#findCoursesForStudentStateFilter: can't find user's courses");
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("CourseManager#findCoursesForStudentStateFilter: can't close connection");
+			}
+		}
+		return userCourses;
+	}
+
+	public List<CourseOfStudent> findAllStudentCourses(long userId) {
+		Connection conn = null;
+		List<CourseOfStudent> userCourses = new ArrayList<>();
+		try {
+			conn = connectionPool.getConnection();
+			userCourses = courseDaoImpl.findAllStudentCourses(conn, userId);
 		} catch (DaoException e) {
 			log.error("CourseManager#findUserCourses: can't find user's courses");
 		} finally {
@@ -131,11 +172,11 @@ public class CourseManager {
 		return userCourses;
 	}
 
-	public void deleteCourseForUser(long userId, long courseId) {
+	public void unregisterStudentForCourse(long userId, long courseId) {
 		Connection conn = null;
 		try {
 			conn = connectionPool.getConnection();
-			courseDaoImpl.deleteCourseForUser(conn, userId, courseId);
+			courseDaoImpl.unregisterStudentForCourse(conn, userId, courseId);
 		} catch (DaoException e) {
 			log.error("CourseManager#deleteCourseForUser: can't register course", e);
 		} finally {
@@ -149,11 +190,11 @@ public class CourseManager {
 		}
 	}
 
-	public void registerCourseForUser(long userId, long courseId) {
+	public void registerStudentForCourse(long userId, long courseId) {
 		Connection conn = null;
 		try {
 			conn = connectionPool.getConnection();
-			courseDaoImpl.registerCourseForUser(conn, userId, courseId);
+			courseDaoImpl.registerStudentForCourse(conn, userId, courseId);
 		} catch (DaoException e) {
 			log.error("CourseManager#registerCourseForUser: can't register course", e);
 		} finally {
@@ -185,11 +226,11 @@ public class CourseManager {
 		}
 	}
 
-	public void SetMark(long userId, long courseId, int mark) {
+	public void setMarkForStudent(long userId, long courseId, int mark) {
 		Connection conn = null;
 		try {
 			conn = connectionPool.getConnection();
-			courseDaoImpl.setMark(conn, userId, courseId, mark);
+			courseDaoImpl.setMarkForStudent(conn, userId, courseId, mark);
 		} catch (DaoException e) {
 			log.error("CourseManager#SetMark: can't set mark", e);
 		} finally {
@@ -221,7 +262,7 @@ public class CourseManager {
 		}
 	}
 
-	public void DeleteCourse(long id) {
+	public void deleteCourseById(long id) {
 		Connection conn = null;
 		try {
 			conn = connectionPool.getConnection();

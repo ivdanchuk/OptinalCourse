@@ -26,7 +26,7 @@ public class UpdateUser implements ActionCommand {
 		int roleId = Integer.parseInt(request.getParameter(PARAM_NAME_ROLE_ID));
 		User user = new User(id, fname, lname, email, pass, roleId);
 		UserManager.getInstance().UpdateUser(user);
-		page = Path.COMMAND__READ_USERS;
+		page = Path.COMMAND__READ_USER;
 		return page;
 	}
 }

@@ -14,7 +14,7 @@ public class UnregUserForCourse implements ActionCommand {
 	public String execute(HttpServletRequest request) {
 		User currentUser = (User) request.getSession().getAttribute("currentUser");
 		long courseId = Long.parseLong(request.getParameter(PARAM_NAME_COURSE_ID));
-		CourseManager.getInstance().deleteCourseForUser(currentUser.getId(), courseId);
+		CourseManager.getInstance().unregisterStudentForCourse(currentUser.getId(), courseId);
 		return Path.COMMAND__READ_USER_COURSES;
 	}
 }

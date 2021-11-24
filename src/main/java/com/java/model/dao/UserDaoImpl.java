@@ -17,9 +17,12 @@ import com.java.model.entity.User;
 public class UserDaoImpl implements UserDao {
 	private static UserDaoImpl instance;
 	private static final Logger logger = LogManager.getLogger(UserDaoImpl.class.getName());
-	public static final String SQL_SELECT_ALL_USERS_BY_ROLE_ID = "SELECT * FROM users where role_id=?";
+	public static final String SQL_SELECT_USERS_BY_ROLE_ID = "SELECT * FROM users where role_id=?";
 	public static final String SQL_SELECT_ALL_USERS = "SELECT * FROM USERS";
-	public static final String SQL_SELECT_USER = "SELECT * FROM USERS WHERE id=?";
+	public static final String SQL_SELECT_LIMIT_USERS = "SELECT * FROM USERS LIMIT ?,?";
+
+	public static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM USERS WHERE email=?";
+	public static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM USERS WHERE id=?";
 	public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM USERS WHERE id=?";
 	public static final String SQL_UPDATE_USER_BY_ID = "UPDATE USERS SET f_name=?,l_name=?,email=?,password=?,role_id=?  WHERE id=?";
 	public static final String SQL_INSERT_USER = "INSERT INTO USERS (f_name,l_name,email,password,role_id)values (?,?,?,?,?)";
@@ -32,6 +35,36 @@ public class UserDaoImpl implements UserDao {
 			instance = new UserDaoImpl();
 		}
 		return instance;
+	}
+
+	@Override
+	public List<User> findAllFromTo(Connection conn, long from, long to) throws DaoException {
+		List<User> users = new ArrayList<>();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(SQL_SELECT_LIMIT_USERS);
+			ps.setLong(1, from);
+			ps.setLong(2, to);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setId(rs.getInt("id"));
+				user.setF_name(rs.getString("f_name"));
+				user.setL_name(rs.getString("l_name"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setRole_id(rs.getLong("role_id"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			logger.fatal("UserDao#findAll SQLException");
+			throw new DaoException("UserDao#findAll:can't execute findAll method", e);
+		} finally {
+			close(ps);
+			close(rs);
+		}
+		return users;
 	}
 
 	@Override
@@ -68,7 +101,7 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(SQL_SELECT_ALL_USERS_BY_ROLE_ID);
+			ps = conn.prepareStatement(SQL_SELECT_USERS_BY_ROLE_ID);
 			ps.setLong(1, roleId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -92,12 +125,39 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public User findUserByEmail(Connection conn, String email) throws DaoException {
+		User user = new User();
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = conn.prepareStatement(SQL_SELECT_USER_BY_EMAIL);
+			ps.setString(1, email);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				user.setId(rs.getLong("id"));
+				user.setF_name(rs.getString("f_name"));
+				user.setL_name(rs.getString("l_name"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setRole_id(rs.getLong("role_id"));
+			}
+		} catch (SQLException e) {
+			logger.fatal("UserDao#findUserByEmail SQLException");
+			throw new DaoException("UserDao#can't execute findUserByEmail method", e);
+		} finally {
+			close(ps);
+			close(rs);
+		}
+		return user;
+	}
+
+	@Override
 	public User findEntityById(Connection conn, Long id) throws DaoException {
 		User user = new User();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(SQL_SELECT_USER);
+			ps = conn.prepareStatement(SQL_SELECT_USER_BY_ID);
 			ps.setLong(1, id);
 			rs = ps.executeQuery();
 			if (rs.next()) {
@@ -196,4 +256,5 @@ public class UserDaoImpl implements UserDao {
 			close(ps);
 		}
 	}
+
 }

@@ -16,7 +16,7 @@ public class setMark implements ActionCommand {
 		String path = Path.PAGE__ERROR_PAGE;
 
 		if ((userId != null) & (courseId != null)) {
-			CourseManager.getInstance().SetMark(Long.parseLong(userId), Long.parseLong(courseId),
+			CourseManager.getInstance().setMarkForStudent(Long.parseLong(userId), Long.parseLong(courseId),
 					Integer.parseInt(mark));
 			path = Path.COMMAND__SHOW_TUTOR_REG_FORM;
 		} else {

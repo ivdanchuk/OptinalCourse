@@ -1,8 +1,8 @@
-package com.java.model.entity;
+package com.java.model.dto;
 
 import java.time.LocalDate;
 
-public class UserOfCourse {
+public class StudentOfCourse {
 	private long user_id;
 	private long course_id;
 	private int mark;
@@ -68,10 +68,10 @@ public class UserOfCourse {
 		this.role_id = role_id;
 	}
 
-	public UserOfCourse() {
+	public StudentOfCourse() {
 	}
 
-	public UserOfCourse(long user_id, long course_id, int mark, LocalDate reg_date) {
+	public StudentOfCourse(long user_id, long course_id, int mark, LocalDate reg_date) {
 		this.user_id = user_id;
 		this.course_id = course_id;
 		this.mark = mark;

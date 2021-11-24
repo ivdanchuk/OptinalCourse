@@ -19,7 +19,7 @@ public class DeleteCourse implements ActionCommand {
 	public String execute(HttpServletRequest request) {
 		String page = null;
 		Long id = Long.parseLong(request.getParameter(PARAM_NAME_ID));
-		CourseManager.getInstance().DeleteCourse(id);
+		CourseManager.getInstance().deleteCourseById(id);
 		page = Path.COMMAND__READ_COURSES;
 
 //		if (LoginLogic.checkLogin(login, pass)) {

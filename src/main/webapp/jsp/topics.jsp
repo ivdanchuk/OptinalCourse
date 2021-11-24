@@ -2,12 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 	<head>
-		<link rel="stylesheet" href="css/bootstrap.min.css">   		
-		<script src="js/bootstrap.min.js"></script>       
 	</head>
+	<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
 	<body>
 		<div class="container">
+		<br>
 		<h2>Topics</h2>
+        <br>
          <!--Topics List-->
     
             <form action="controller" method="post" id="topicsForm" role="form" >              

@@ -1,7 +1,16 @@
 package com.java.logic;
 
 public interface Roles {
-	public static final String ROLE_ADMIN = "admin";
-	public static final String ROLE_STUDENT = "student";
-	public static final String ROLE_TUTOR = "tutor";
+	public static final String ROLE_ADMIN_NAME = "admin";
+	public static final long ROLE_ADMIN_ID = 1l;
+
+	public static final String ROLE_STUDENT_NAME = "student";
+	public static final long ROLE_STUDENT_ID = 2l;
+
+	public static final String ROLE_TUTOR_NAME = "tutor";
+	public static final long ROLE_TUTOR_ID = 3l;
+
+	public static final String ROLE_BLOCED_NAME = "blocked";
+	public static final long ROLE_BLOCED_ID = 4l;
+
 }

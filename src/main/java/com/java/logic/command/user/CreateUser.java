@@ -25,7 +25,7 @@ public class CreateUser implements ActionCommand {
 		String roleId = request.getParameter(PARAM_NAME_ROLE_ID);
 		User user = new User(-1l, fname, lname, email, pass, 2);
 		UserManager.getInstance().CreateUser(user);
-		page = Path.COMMAND__READ_USERS;
+		page = Path.COMMAND__READ_USERS2;
 
 //		if (LoginLogic.checkLogin(login, pass)) {
 //			request.setAttribute("user", login);

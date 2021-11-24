@@ -11,6 +11,7 @@ import com.java.controller.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.dao.CourseDaoImpl;
+import com.java.model.dto.StudentOfCourse;
 import com.java.model.entity.Course;
 import com.java.model.entity.User;
 
@@ -25,6 +26,18 @@ public class showTutorRegForm implements ActionCommand {
 			long userId = currentUser.getId();
 			List<Course> tutorCourses = CourseManager.getInstance().findTutorCourses(userId);
 			request.getSession().setAttribute("tutorCourses", tutorCourses);
+
+			// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+			String courseId = request.getParameter("courseId");
+			if (courseId == null) {
+				courseId = (String) request.getSession().getAttribute("courseId");
+			}
+			if (courseId != null) {
+				List<StudentOfCourse> usersOfCourse = CourseManager.getInstance()
+						.findCourseUsers(Long.parseLong(courseId));
+				request.getSession().setAttribute("usersOfCourse", usersOfCourse);
+			}
+
 			path = Path.PAGE__REGISTER_TUTOR;
 		} else {
 			String errorMessage = "showTutorRegForm: currentUser is null, can't execute command, redirect to error page";

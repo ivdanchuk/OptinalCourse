@@ -19,7 +19,7 @@ public class ReadCourses implements ActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		List<Course> courses = new ArrayList<>();
-		courses = CourseManager.getInstance().listAllCourses();
+		courses = CourseManager.getInstance().findAllCourses();
 		request.setAttribute("courses", courses);
 		log.debug("ReadCourses#execute " + courses);
 		return Path.PAGE__COURSES;

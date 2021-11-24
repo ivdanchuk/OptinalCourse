@@ -15,10 +15,10 @@ import com.java.logic.command.user.DeleteUser;
 import com.java.logic.command.user.ReadUser;
 import com.java.logic.command.user.ReadUserCourses;
 import com.java.logic.command.user.ReadUsers;
+import com.java.logic.command.user.ReadUsers2;
 import com.java.logic.command.user.RegUserForCourse;
 import com.java.logic.command.user.UnregUserForCourse;
 import com.java.logic.command.user.UpdateUser;
-import com.java.logic.command.user.readUsersOfCourse;
 import com.java.logic.command.user.setMark;
 import com.java.logic.command.user.showMarkForm;
 import com.java.logic.command.user.showTutorRegForm;
@@ -29,6 +29,12 @@ public enum CommandEnum {
 			this.command = new LoginCommand();
 		}
 	},
+	I18N {
+		{
+			this.command = new I18NCommand();
+		}
+	},
+
 	LOGOUT {
 		{
 			this.command = new LogoutCommand();
@@ -97,6 +103,11 @@ public enum CommandEnum {
 		}
 	},
 
+	READ_USERS2 {
+		{
+			this.command = new ReadUsers2();
+		}
+	},
 	READ_USER_COURSES {
 
 		{
@@ -142,11 +153,16 @@ public enum CommandEnum {
 			this.command = new SortCourses();
 		}
 	},
-	READ_USERS_OF_COURSE {
-		{
-			this.command = new readUsersOfCourse();
-		}
-	},
+//	READ_USERS_OF_COURSE {
+//		{
+//			this.command = new readUsersOfCourse();
+//		}
+//	},
+//	READ_CURRENT_USER {
+//		{
+//			this.command = new ReadCurrentUser();
+//		}
+//	},
 	SHOW_TUTOR_REG_FORM {
 		{
 			this.command = new showTutorRegForm();
@@ -163,7 +179,6 @@ public enum CommandEnum {
 		}
 	};
 
-	// update_user
 	ActionCommand command;
 
 	public ActionCommand getCurrentCommand() {

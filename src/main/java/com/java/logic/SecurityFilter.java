@@ -34,26 +34,29 @@ public class SecurityFilter implements Filter {
 	private static List<String> outOfControl = new ArrayList<>();
 	private static final String COMMANDS_ADMIN = "CREATE_COURSE READ_COURSE UPDATE_COURSE DELETE_COURSE"
 			+ " CREATE_TOPIC READ_TOPIC UPDATE_TOPIC DELETE_TOPIC"
-			+ " CREATE_USER UPDATE_USER DELETE_USER READ_USERS READ_USER_COURSES"
+			+ " CREATE_USER UPDATE_USER DELETE_USER READ_USERS READ_USERS2 READ_USER_COURSES"
 			+ " REG_USER_FOR_COURSE UNREG_USER_FOR_COURSE show_tutor_reg_form read_users_of_course show_mark_form";
 
 	private static final String COMMANDS_STUDENT = "REG_USER_FOR_COURSE UNREG_USER_FOR_COURSE READ_USER_COURSES";
 
-	private static final String COMMANDS_TUTOR = "READ_COURSE UPDATE_COURSE CREATE_COURSE DELETE_COURSE READ_TOPIC"
+	private static final String COMMANDS_TUTOR = "READ_COURSE UPDATE_COURSE CREATE_COURSE" + " READ_TOPIC UPDATE_TOPIC"
 			+ " show_tutor_reg_form read_users_of_course show_mark_form set_mark";
 
-	private static final String COMMANDS_COMMON = "LOGOUT READ_USER  UPDATE_USER "
+	private static final String COMMANDS_COMMON = "LOGOUT READ_USER READ_CURRENT_USER UPDATE_USER "
 			+ " READ_COURSES READ_TOPICS sort_courses";
 
-	private static final String COMMANDS_OUT_OF_CONTROL = "LOGIN";
+	private static final String COMMANDS_OUT_OF_CONTROL = "LOGIN I18N";
+
+	private static final String COMMANDS_BLOCKED = "";
 
 	// read_courses
 	@Override
 	public void init(FilterConfig config) {
 		// roles
-		accessMap.put(Roles.ROLE_ADMIN, asList(COMMANDS_ADMIN));
-		accessMap.put(Roles.ROLE_STUDENT, asList(COMMANDS_STUDENT));
-		accessMap.put(Roles.ROLE_TUTOR, asList(COMMANDS_TUTOR));
+		accessMap.put(Roles.ROLE_ADMIN_NAME, asList(COMMANDS_ADMIN));
+		accessMap.put(Roles.ROLE_STUDENT_NAME, asList(COMMANDS_STUDENT));
+		accessMap.put(Roles.ROLE_TUTOR_NAME, asList(COMMANDS_TUTOR));
+		accessMap.put(Roles.ROLE_BLOCED_NAME, asList(COMMANDS_BLOCKED));
 
 		// commons
 		commons = asList(COMMANDS_COMMON);

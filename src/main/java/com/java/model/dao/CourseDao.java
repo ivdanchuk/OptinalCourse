@@ -4,22 +4,27 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.java.model.DaoException;
+import com.java.model.dto.CourseOfStudent;
+import com.java.model.dto.StudentOfCourse;
 import com.java.model.entity.Course;
-import com.java.model.entity.UserOfCourse;
 
 public interface CourseDao extends BaseDao<Long, Course> {
-	public List<Course> findStudentCourses(Connection conn, long userId) throws DaoException;
+	public List<CourseOfStudent> findAllStudentCourses(Connection conn, long userId) throws DaoException;
 
-	public void registerCourseForUser(Connection conn, long userId, long courseId) throws DaoException;
+	public void registerStudentForCourse(Connection conn, long userId, long courseId) throws DaoException;
 
 	List<Course> findTutorCourses(Connection conn, long userId) throws DaoException;
 
-	void deleteCourseForUser(Connection conn, long userId, long courseId) throws DaoException;
+	void unregisterStudentForCourse(Connection conn, long userId, long courseId) throws DaoException;
 
 	List<Course> executeSqlQuery(Connection conn, String SQL) throws DaoException;
 
-	List<UserOfCourse> findCourseUsers(Connection conn, long courseId) throws DaoException;
+	List<StudentOfCourse> findCourseUsers(Connection conn, long courseId) throws DaoException;
 
-	void setMark(Connection conn, long userId, long courseId, int mark) throws DaoException;
+	void setMarkForStudent(Connection conn, long userId, long courseId, int mark) throws DaoException;
+
+	List<CourseOfStudent> findCoursesOfStudentWithStateFilter(Connection conn, long userId, int state) throws DaoException;
+
+	List<Course> findAllNotStartedCourses(Connection conn) throws DaoException;
 
 }

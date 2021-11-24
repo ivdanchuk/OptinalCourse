@@ -41,4 +41,9 @@ public class DBCPDataSource {
 			throw new IllegalStateException("Can't initialize connection", e);
 		}
 	}
+
+	public static void main(String[] args) {
+		int i = 1;
+		String testData = "insert into users values(Default,'студент1','студент1','student@email.com','111',3);";
+	}
 }

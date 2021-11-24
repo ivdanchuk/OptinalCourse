@@ -2,7 +2,12 @@ package com.java.logic.command.user;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.java.controller.Path;
+import com.java.logic.EncodingFilter;
+import com.java.logic.Roles;
 import com.java.logic.command.ActionCommand;
 import com.java.model.RoleManager;
 import com.java.model.UserManager;
@@ -10,33 +15,54 @@ import com.java.model.entity.Role;
 import com.java.model.entity.User;
 
 public class ReadUser implements ActionCommand {
-	private static final String PARAM_NAME_ID = "userId";
+	private final static Logger log = LogManager.getLogger(EncodingFilter.class);
+	private static final String PARAM_NAME_ID = "userIdForUpdate";
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		// Click on user give us new user ID (selected id)
-		String userId = request.getParameter(PARAM_NAME_ID);
-//		User selectedUser = (User) request.getSession().getAttribute("selectedUser");
-//		if (selectedUser == null) {
-//			selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userId));
-//		}
-//		Role role = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
-//		request.getSession().setAttribute("currentRole", role);
-//		request.getSession().setAttribute("currentUser", selectedUser);
-//		return Path.PAGE__USER;
-
-		// Clicked by admin
-		if (userId != null) {
-			User selectedUser = (User) request.getSession().getAttribute("selectedUser");
-			if (selectedUser == null) {
-				selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userId));
-			}
-			Role role = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
-			request.getSession().setAttribute("currentRole", role);
-			request.getSession().setAttribute("currentUser", selectedUser);
-		} else {
-
+		String path = Path.PAGE__ERROR_PAGE;
+		User currentUser = (User) request.getSession().getAttribute("currentUser");
+		Role currentRole = (Role) request.getSession().getAttribute("currentRole");
+		if ((currentUser == null) | (currentRole == null)) {
+			String errorMessage = "Command#ReadUser: currentUser or currentRole is null !";
+			log.error(errorMessage);
+			return path;
 		}
-		return Path.PAGE__USER;
+
+		path = Path.PAGE__USER;
+		if (Roles.ROLE_ADMIN_ID != currentRole.getId()) {
+			currentUser = UserManager.getInstance().FindUserById(currentUser.getId());
+			currentRole = RoleManager.getInstance().FindRoleById(currentUser.getRole_id());
+			request.getSession().setAttribute("selectedUser", currentUser);
+			request.getSession().setAttribute("selectedRole", currentRole);
+		} else {
+			String userIdForUpdate = request.getParameter(PARAM_NAME_ID);
+			if (userIdForUpdate != null) {
+				request.getSession().setAttribute("userIdForUpdate", userIdForUpdate);
+			} else {
+				userIdForUpdate = (String) request.getSession().getAttribute("userIdForUpdate");
+			}
+			User selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userIdForUpdate));
+			Role selectedRole = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
+			request.getSession().setAttribute("selectedUser", selectedUser);
+			request.getSession().setAttribute("selectedRole", selectedRole);
+		}
+		return path;
+
+//		if (Roles.ROLE_ADMIN_ID == currentRole.getId()) {
+//			if (userIdForUpdate != null) {
+//				request.getSession().setAttribute("userIdForUpdate", userIdForUpdate);
+//			} else {
+//				userIdForUpdate = (String) request.getSession().getAttribute("userIdForUpdate");
+//			}
+//			selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userIdForUpdate));
+//			selectedRole = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
+//			request.getSession().setAttribute("selectedUser", selectedUser);
+//			request.getSession().setAttribute("selectedRole", selectedRole);
+//		} else {
+//			request.getSession().setAttribute("selectedUser", currentUser);
+//			request.getSession().setAttribute("selectedRole", currentRole);
+//		}
+//		return path;
 	}
 }

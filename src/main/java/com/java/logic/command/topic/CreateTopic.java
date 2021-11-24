@@ -18,14 +18,6 @@ public class CreateTopic implements ActionCommand {
 		Topic topic = new Topic(-1l, name);
 		TopicManager.getInstance().CreateTopic(topic);
 		page = Path.COMMAND__READ_TOPICS;
-
-//		if (LoginLogic.checkLogin(login, pass)) {
-//			request.setAttribute("user", login);
-//			page = ConfigurationManager.getProperty("path.page.main");
-//		} else {
-//			request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
-//			page = ConfigurationManager.getProperty("path.page.login");
-//		}
 		return page;
 	}
 }

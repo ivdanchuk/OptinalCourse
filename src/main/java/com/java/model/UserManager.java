@@ -50,6 +50,26 @@ public class UserManager {
 		return users;
 	}
 
+	public List<User> listAllUsersFromTo(long from, long to) {
+		Connection conn = null;
+		List<User> users = new ArrayList<>();
+		try {
+			conn = connectionPool.getConnection();
+			users = userDaoImpl.findAllFromTo(conn, from, to);
+		} catch (DaoException e) {
+			log.error("UserManager#listAllUsersFromTo: can't list users");
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("UserManager#listAllUsersFromTo: can't close connection");
+			}
+		}
+		return users;
+	}
+
 	public List<User> listAllUsers() {
 		Connection conn = null;
 		List<User> users = new ArrayList<>();
@@ -122,6 +142,26 @@ public class UserManager {
 				log.error("UserManager#DeleteUser: can't close connection", e);
 			}
 		}
+	}
+
+	public User FindUserByEmail(String email) {
+		User user = new User();
+		Connection conn = null;
+		try {
+			conn = connectionPool.getConnection();
+			user = userDaoImpl.findUserByEmail(conn, email);
+		} catch (DaoException e) {
+			log.error("UserManager#FindUserByEmail: can't find user", e);
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("UserManager#FindUserById: can't close connection", e);
+			}
+		}
+		return user;
 	}
 
 	public User FindUserById(long id) {

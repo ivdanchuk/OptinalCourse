@@ -13,7 +13,7 @@
 <div class="container">
 	<br>
 	<form name="loginForm" method="POST" action="/optinal-course/controller">
-		<input type="hidden" name="command" value="login" />
+		<input type="hidden" id ="command" name="command" value="login" />
 		
 		<!--  Login:<br/> 
 		<input type="text" name="login" value=""/ size="20">
@@ -33,9 +33,11 @@
 		<br/><br/>
 
 	 	<input type="submit" value="Sign in" style="margin-right:50px"/>
-	 	<input type="submit" value="Sign up"/>
+		<input type = "submit" value="Sign up" onclick = "document.getElementById('command').value = 'signup'"/>
 
 	</form>
+		
+
 	<hr/><br>
 	${errorLoginPassMessage}
 	<br/>
@@ -44,7 +46,7 @@
 	${nullPage}
 	<br/>
 	<br/>
-	admin@admin.com maksym@gmail.com ivdanchuk@gmail.com
+	admin@admin.com maksym@gmail.com ivdanchuk@gmail.com !!!
 	<br/>	
 </div>
 </body></html>

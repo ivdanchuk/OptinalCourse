@@ -1,4 +1,4 @@
-package com.java.controller;
+package com.java.constant;
 
 /**
  * Path holder (jsp pages, controller commands).
@@ -11,14 +11,10 @@ public final class Path {
 	public static final String LOCALE_NAME_RU = "ru";
 	public static final String LOCALE_NAME_EN = "en";
 
-	// pagesefe
 	public static final String PAGE__LOGIN = "jsp/login.jsp";
 	public static final String PAGE__MAIN = "jsp/main.jsp";
 
 	public static final String PAGE__ERROR_PAGE = "jsp/error.jsp";
-//	public static final String PAGE__LIST_MENU = "/WEB-INF/jsp/client/list_menu.jsp";
-//	public static final String PAGE__LIST_ORDERS = "/WEB-INF/jsp/admin/list_orders.jsp";
-//	public static final String PAGE__SETTINGS = "/WEB-INF/jsp/settings.jsp";
 
 	public static final String PAGE__USER = "jsp/user.jsp";
 	public static final String PAGE__NEW_USER = "jsp/new_user.jsp";
@@ -37,8 +33,6 @@ public final class Path {
 	public static final String PAGE__USER_COURSES = "jsp/user_courses.jsp";
 	public static final String PAGE__USER_REG_COURSE = "jsp/reg_course.jsp";
 	public static final String PAGE___SET_MARK = "jsp/set_mark.jsp";
-
-	// courses commands
 
 	// course commands
 	public static final String COMMAND__READ_COURSES = "controller?command=read_courses";
@@ -69,7 +63,4 @@ public final class Path {
 	public static final String COMMAND__SORT_COURSES = "controller?command=sort_courses";
 	public static final String COMMAND__READ_USERS_OF_COURSE = "controller?command=read_users_of_course";
 	public static final String COMMAND__SHOW_TUTOR_REG_FORM = "controller?command=show_tutor_reg_form";
-
-	// public static final String COMMAND__LIST_MENU =
-	// "/controller?command=listMenu";
 }

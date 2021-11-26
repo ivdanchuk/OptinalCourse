@@ -12,6 +12,7 @@ public class Course extends Entity {
 	private long topic_id;
 	private long user_id;
 	private long counter;
+	private int state;
 
 	public Course(long id, String name, int duration, LocalDate start_date, LocalDate end_date, long topic_id,
 			long user_id) {
@@ -23,6 +24,7 @@ public class Course extends Entity {
 		this.topic_id = topic_id;
 		this.user_id = user_id;
 //		this.count = count;
+//		this.state = 1;
 	}
 
 	public Course() {

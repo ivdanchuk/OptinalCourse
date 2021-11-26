@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.entity.Course;

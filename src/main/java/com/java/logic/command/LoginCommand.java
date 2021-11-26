@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.java.controller.Path;
-import com.java.logic.Roles;
+import com.java.constant.Path;
+import com.java.constant.RoleConstant;
 import com.java.model.CourseManager;
 import com.java.model.RoleManager;
 import com.java.model.TopicManager;
@@ -35,7 +35,7 @@ public class LoginCommand implements ActionCommand {
 		}
 
 		if ((user.getEmail().equals(login)) && (user.getPassword().equals(pass))) {
-			if (user.getRole_id() != Roles.ROLE_BLOCED_ID) {
+			if (user.getRole_id() != RoleConstant.ROLE_BLOCED_ID) {
 				currentUser = user;
 				page = Path.PAGE__MAIN;
 			} else {
@@ -60,13 +60,17 @@ public class LoginCommand implements ActionCommand {
 			courses = CourseManager.getInstance().findAllCourses();
 			request.getSession().setAttribute("courses", courses);
 
-			List<Course> coursesNotStarted = new ArrayList<>();
-			coursesNotStarted = CourseManager.getInstance().findAllNotStartedCourses();
-			request.getSession().setAttribute("coursesNotStarted", coursesNotStarted);
-
 			List<User> tutors = new ArrayList<>();
 			tutors = UserManager.getInstance().listAllUsersByRoleID(2l);
 			request.getSession().setAttribute("tutors", tutors);
+
+			List<Role> roles = new ArrayList<>();
+			roles = RoleManager.getInstance().listAllRoles();
+			request.getSession().setAttribute("roles", roles);
+
+			List<Course> coursesNotStarted = new ArrayList<>();
+			coursesNotStarted = CourseManager.getInstance().findAllNotStartedCourses();
+			request.getSession().setAttribute("coursesNotStarted", coursesNotStarted);
 
 			// By default
 			request.getSession().setAttribute("defaultLocale", "en");

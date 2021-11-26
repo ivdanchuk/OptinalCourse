@@ -5,9 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.java.controller.Path;
-import com.java.logic.EncodingFilter;
-import com.java.logic.Roles;
+import com.java.constant.Path;
+import com.java.constant.Role;
+import com.java.filter.EncodingFilter;
 import com.java.logic.command.ActionCommand;
 import com.java.model.RoleManager;
 import com.java.model.UserManager;
@@ -30,7 +30,7 @@ public class ReadUser implements ActionCommand {
 		}
 
 		path = Path.PAGE__USER;
-		if (Roles.ROLE_ADMIN_ID != currentRole.getId()) {
+		if (Role.ROLE_ADMIN_ID != currentRole.getId()) {
 			currentUser = UserManager.getInstance().FindUserById(currentUser.getId());
 			currentRole = RoleManager.getInstance().FindRoleById(currentUser.getRole_id());
 			request.getSession().setAttribute("selectedUser", currentUser);
@@ -48,21 +48,5 @@ public class ReadUser implements ActionCommand {
 			request.getSession().setAttribute("selectedRole", selectedRole);
 		}
 		return path;
-
-//		if (Roles.ROLE_ADMIN_ID == currentRole.getId()) {
-//			if (userIdForUpdate != null) {
-//				request.getSession().setAttribute("userIdForUpdate", userIdForUpdate);
-//			} else {
-//				userIdForUpdate = (String) request.getSession().getAttribute("userIdForUpdate");
-//			}
-//			selectedUser = UserManager.getInstance().FindUserById(Long.parseLong(userIdForUpdate));
-//			selectedRole = RoleManager.getInstance().FindRoleById(selectedUser.getRole_id());
-//			request.getSession().setAttribute("selectedUser", selectedUser);
-//			request.getSession().setAttribute("selectedRole", selectedRole);
-//		} else {
-//			request.getSession().setAttribute("selectedUser", currentUser);
-//			request.getSession().setAttribute("selectedRole", currentRole);
-//		}
-//		return path;
 	}
 }

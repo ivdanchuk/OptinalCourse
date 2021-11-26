@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.logic.command.MessageManager;
 import com.java.model.CourseManager;

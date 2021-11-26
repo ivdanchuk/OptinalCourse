@@ -1,6 +1,6 @@
-package com.java.logic;
+package com.java.constant;
 
-public interface Roles {
+public interface RoleConstant {
 	public static final String ROLE_ADMIN_NAME = "admin";
 	public static final long ROLE_ADMIN_ID = 1l;
 

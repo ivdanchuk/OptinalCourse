@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.model.TopicManager;
 import com.java.model.UserManager;
@@ -21,13 +21,6 @@ public class DeleteTopic implements ActionCommand {
 		TopicManager.getInstance().DeleteTopic(id);
 		page = Path.COMMAND__READ_TOPICS;
 
-//		if (LoginLogic.checkLogin(login, pass)) {
-//			request.setAttribute("user", login);
-//			page = ConfigurationManager.getProperty("path.page.main");
-//		} else {
-//			request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
-//			page = ConfigurationManager.getProperty("path.page.login");
-//		}
 		return page;
 	}
 

@@ -2,7 +2,7 @@ package com.java.logic.command.user;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.model.UserManager;
 import com.java.model.entity.User;

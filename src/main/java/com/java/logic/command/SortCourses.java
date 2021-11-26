@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
 import com.java.model.CourseManager;
 import com.java.model.entity.Course;
 

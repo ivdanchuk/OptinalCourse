@@ -1,4 +1,4 @@
-package com.java.logic;
+package com.java.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +20,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
+import com.java.constant.RoleConstant;
 import com.java.model.entity.Role;
 
 @WebFilter(urlPatterns = "/controller")
@@ -45,7 +46,7 @@ public class SecurityFilter implements Filter {
 	private static final String COMMANDS_COMMON = "LOGOUT READ_USER READ_CURRENT_USER UPDATE_USER "
 			+ " READ_COURSES READ_TOPICS sort_courses";
 
-	private static final String COMMANDS_OUT_OF_CONTROL = "LOGIN I18N";
+	private static final String COMMANDS_OUT_OF_CONTROL = "LOGIN I18N SIGNUP";
 
 	private static final String COMMANDS_BLOCKED = "";
 
@@ -53,10 +54,10 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void init(FilterConfig config) {
 		// roles
-		accessMap.put(Roles.ROLE_ADMIN_NAME, asList(COMMANDS_ADMIN));
-		accessMap.put(Roles.ROLE_STUDENT_NAME, asList(COMMANDS_STUDENT));
-		accessMap.put(Roles.ROLE_TUTOR_NAME, asList(COMMANDS_TUTOR));
-		accessMap.put(Roles.ROLE_BLOCED_NAME, asList(COMMANDS_BLOCKED));
+		accessMap.put(RoleConstant.ROLE_ADMIN_NAME, asList(COMMANDS_ADMIN));
+		accessMap.put(RoleConstant.ROLE_STUDENT_NAME, asList(COMMANDS_STUDENT));
+		accessMap.put(RoleConstant.ROLE_TUTOR_NAME, asList(COMMANDS_TUTOR));
+		accessMap.put(RoleConstant.ROLE_BLOCED_NAME, asList(COMMANDS_BLOCKED));
 
 		// commons
 		commons = asList(COMMANDS_COMMON);

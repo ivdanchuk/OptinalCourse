@@ -126,11 +126,13 @@ public class UserManager {
 		}
 	}
 
-	public void DeleteUser(long id) {
+	public boolean DeleteUser(long id) {
 		Connection conn = null;
+		boolean result = false;
 		try {
 			conn = connectionPool.getConnection();
 			userDaoImpl.deleteById(conn, id);
+			result = true;
 		} catch (DaoException e) {
 			log.error("UserManager#DeleteUser: can't delete user", e);
 		} finally {
@@ -142,6 +144,7 @@ public class UserManager {
 				log.error("UserManager#DeleteUser: can't close connection", e);
 			}
 		}
+		return result;
 	}
 
 	public User FindUserByEmail(String email) {

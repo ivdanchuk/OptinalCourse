@@ -1,4 +1,4 @@
-package com.java.logic;
+package com.java.filter;
 
 import java.io.IOException;
 

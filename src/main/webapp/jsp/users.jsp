@@ -63,8 +63,8 @@
             </c:if> 
     
             <form action="controller" method="post" id="usersForm" role="form" >              
-                <input type="hidden" id="id" name="id">
-                <input type="hidden" id="command" name="command">
+                <input type="hidden" id="id" name="id" value="">
+                <input type="hidden" id="command" name="command" value="">
                 <c:choose>
                     <c:when test="${not empty users}">
                         <table  class="table table-striped">

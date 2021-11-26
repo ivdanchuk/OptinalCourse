@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.entity.Course;
@@ -34,14 +34,6 @@ public class UpdateCourse implements ActionCommand {
 
 		page = Path.COMMAND__READ_COURSES;
 
-//		if (LoginLogic.checkLogin(login, pass)) {
-//			request.setAttribute("user", login);
-//			page = ConfigurationManager.getProperty("path.page.main");
-//		} else {
-//			request.setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.loginerror"));
-//			page = ConfigurationManager.getProperty("path.page.login");
-//		}
 		return page;
-
 	}
 }

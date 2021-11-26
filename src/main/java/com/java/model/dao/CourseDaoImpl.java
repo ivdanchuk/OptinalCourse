@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.java.logic.CourseState;
+import com.java.constant.CourseStateConstant;
 import com.java.model.DaoException;
 import com.java.model.dto.CourseOfStudent;
 import com.java.model.dto.StudentOfCourse;
@@ -170,7 +170,7 @@ public class CourseDaoImpl implements CourseDao {
 		List<Course> courses = new ArrayList<>();
 		try {
 			ps = conn.prepareStatement(SQL_SELECT_ALL_NOT_STARTED_COURSES);
-			ps.setLong(1, CourseState.COURSE_NOTSTARTED);
+			ps.setLong(1, CourseStateConstant.COURSE_NOTSTARTED);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Course course = new Course();

@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.jstl.core.Config;
 
-import com.java.controller.Path;
+import com.java.constant.Path;
 
 public class I18NCommand implements ActionCommand {
 	@Override

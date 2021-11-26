@@ -29,6 +29,12 @@ public enum CommandEnum {
 			this.command = new LoginCommand();
 		}
 	},
+	SIGNUP {
+		{
+			this.command = new SignUp();
+		}
+	},
+
 	I18N {
 		{
 			this.command = new I18NCommand();

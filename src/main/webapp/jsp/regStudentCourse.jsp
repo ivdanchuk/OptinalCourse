@@ -6,12 +6,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!--  
-        <link rel="stylesheet" href="/optinal-course/css/bootstrap.min.css">   		
-        <script src="/optinal-course/js/bootstrap.min.js"></script>     
-		-->
 		<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
-
     </head>
 
 <body>
@@ -21,8 +16,6 @@
             <form action="/optinal-course/controller" method="post"  role="form" data-toggle="validator" >
                 <input type="hidden" id="command" name="command" value="reg_user_for_course">
                 <input type="hidden" id="userId" name="userId" value="${selectedUser.id}">
-                <!--  <div class="form-group col-xs-4"> -->
-
 				    <label for="course">Choose the course:</label>
 					<select id="courseId" name="courseId">
                             <c:forEach var="course" items="${coursesNotStarted}">
@@ -77,5 +70,6 @@
                 </div>                                                      
 </body>
 </html>
+	<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>
 
 

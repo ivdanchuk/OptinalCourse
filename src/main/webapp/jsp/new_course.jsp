@@ -2,10 +2,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
+	<!--  
     <head>
         <link rel="stylesheet" href="/optinal-course/css/bootstrap.min.css">   		
         <script src="/optinal-course/js/bootstrap.min.js"></script>     
     </head>
+	-->
+	<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
 <body>
         <div class="container">
             	<form action="/optinal-course/controller" method="post" role="form" data-toggle="validator" >
@@ -48,4 +51,5 @@
 	</body>
 </html>
 
+	<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>
 

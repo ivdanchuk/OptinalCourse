@@ -32,7 +32,7 @@ public class CreateCourse implements ActionCommand {
 		Course course = new Course(id, name, duration, start_date, end_date, topic_id, user_id);
 		CourseManager.getInstance().CreateCourse(course);
 		page = Path.COMMAND__READ_COURSES;
-		SessionService.UpdateCourses(request);
+		SessionService.setCourses(request);
 		return page;
 	}
 }

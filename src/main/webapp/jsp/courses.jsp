@@ -96,7 +96,6 @@
 						 </c:choose>			        		
 			      </label>
 			    
-
 			</div>
 			  <button type="submit" class="btn btn-primary mb-2">Filter & sort courses</button>
 			</form>
@@ -117,7 +116,6 @@
                                     <td>Topic</td>
                                     <td>Tutor</td>
                                     <td>Registered</td>
-
                                     <td></td>
                                 </tr>
                             </thead>
@@ -128,8 +126,7 @@
                                     <c:set var="classSucess" value="info"/>
                                 </c:if>
                                
-                                <tr class="${classSucess}">
-                                    
+                                <tr class="${classSucess}">                             
                                     <td>
                                         <a href="controller?id=${course.id}&command=read_course">${course.id}</a>
                                     </td>                                    
@@ -168,11 +165,13 @@
                     </c:otherwise>
                 </c:choose>                        
             </form>
+            
             <form action ="jsp/new_course.jsp">            
-                <br></br>
+                
                 <button type="submit" class="btn btn-primary  btn-md">New course</button> 
             </form>
 		</div>
 </body>
 </html>
 	<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>
+	

@@ -27,8 +27,18 @@
                     <label for="password" class="control-label col-xs-4">Password:</label>                   
                     <input type="password" name="password" id="password" class="form-control" pattern="[a-zA-Z0-9]{3,16}" value="${selectedUser.password}" required="true"/> 
 
+					<!--
                     <label for="role" class="control-label col-xs-4">Role:</label>                    
                     <input type="text" name="role_id" id="role_id" class="form-control" value="${selectedUser.role_id}" required="true"/> 
+                    -->
+
+                    <label for="role" class="control-label col-xs-4">Role:</label>                    
+					<select class="form-control" id="role_id" name="role_id">
+							<c:forEach var="role" items="${roles}">
+								<option value="${role.id}">${role.name}</option>
+                            </c:forEach>               
+					</select>						
+
                     <br>
 	                <button type="submit" class="btn btn-primary  btn-md">Update</button> 
                 </div>                                                      

@@ -90,7 +90,14 @@
                                     <td>${user.email}</td>   
                                     <td>${user.f_name}</td>
                                     <td>${user.l_name}</td>
-                                    <td>${user.role_id}</td>
+                                    
+		                            <!--  <td>${user.role_id}</td>-->
+									<c:forEach var="role" items="${sessionScope.roles}">
+										<c:if test ="${user.role_id==role.id}">                        	
+                                    		<td>${role.name}</td>
+										</c:if>
+		                            </c:forEach>               
+                                    
                                     <td><a href="#" id="delete" 
                                            onclick="document.getElementById('command').value ='delete_user';
                                            document.getElementById('id').value = '${user.id}';
@@ -152,3 +159,4 @@
 		</div>
 	</body>
 </html>
+<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>

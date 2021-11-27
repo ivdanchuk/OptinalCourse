@@ -124,7 +124,7 @@
             </form>
             
 
-			<form action ="/optinal-course/jsp/reg_for_course.jsp	" method="get">
+			<form action ="/optinal-course/jsp/regStudentCourse.jsp" method="get">
                 <button type="submit" class="btn btn-primary  btn-md">Register for course</button> 
             </form>
 

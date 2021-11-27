@@ -42,7 +42,7 @@ public class CreateUser implements ActionCommand {
 		if (roleId != null) {
 			user = new User(-1l, fname, lname, email, pass, Long.parseLong(roleId));
 			UserManager.getInstance().CreateUser(user);
-			SessionService.UpdateTutors(request);
+			SessionService.setTutors(request);
 			page = Path.COMMAND__READ_USERS2;
 		} else {
 			Log.error("CreateUser#execute" + "Can't create user, see logs for details.");

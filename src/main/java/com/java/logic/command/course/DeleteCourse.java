@@ -22,7 +22,7 @@ public class DeleteCourse implements ActionCommand {
 		Long id = Long.parseLong(request.getParameter(PARAM_NAME_ID));
 		if (CourseManager.getInstance().deleteCourseById(id)) {
 			page = Path.COMMAND__READ_COURSES;
-			SessionService.UpdateCourses(request);
+			SessionService.setCourses(request);
 		} else {
 			page = Path.PAGE__ERROR_PAGE;
 			request.getSession().setAttribute("errorMessage", "Can't delete row, see log for details");

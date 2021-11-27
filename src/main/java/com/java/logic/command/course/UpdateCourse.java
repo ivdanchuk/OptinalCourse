@@ -32,7 +32,7 @@ public class UpdateCourse implements ActionCommand {
 
 		Course course = new Course(id, name, duration, start_date, end_date, topic_id, user_id);
 		CourseManager.getInstance().UpdateCourse(course);
-		SessionService.UpdateCourses(request);
+		SessionService.setCourses(request);
 
 		page = Path.COMMAND__READ_COURSES;
 

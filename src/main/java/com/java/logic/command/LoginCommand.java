@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.java.config.MessageManager;
 import com.java.constant.Path;
 import com.java.constant.RoleConstant;
 import com.java.model.CourseManager;
@@ -15,6 +16,7 @@ import com.java.model.entity.Course;
 import com.java.model.entity.Role;
 import com.java.model.entity.Topic;
 import com.java.model.entity.User;
+import com.java.service.SessionService;
 
 public class LoginCommand implements ActionCommand {
 	private static final String PARAM_NAME_LOGIN = "login";
@@ -56,13 +58,15 @@ public class LoginCommand implements ActionCommand {
 			topics = TopicManager.getInstance().listAllTopics();
 			request.getSession().setAttribute("topics", topics);
 
-			List<Course> courses = new ArrayList<>();
-			courses = CourseManager.getInstance().findAllCourses();
-			request.getSession().setAttribute("courses", courses);
+			SessionService.UpdateCourses(request);
+//			List<Course> courses = new ArrayList<>();
+//			courses = CourseManager.getInstance().findAllCourses();
+//			request.getSession().setAttribute("courses", courses);
 
-			List<User> tutors = new ArrayList<>();
-			tutors = UserManager.getInstance().listAllUsersByRoleID(2l);
-			request.getSession().setAttribute("tutors", tutors);
+			SessionService.UpdateTutors(request);
+//			List<User> tutors = new ArrayList<>();
+//			tutors = UserManager.getInstance().listAllUsersByRoleID(2l);
+//			request.getSession().setAttribute("tutors", tutors);
 
 			List<Role> roles = new ArrayList<>();
 			roles = RoleManager.getInstance().listAllRoles();

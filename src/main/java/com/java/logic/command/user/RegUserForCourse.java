@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.java.config.MessageManager;
 import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
-import com.java.logic.command.MessageManager;
 import com.java.model.CourseManager;
 import com.java.model.dto.CourseOfStudent;
 import com.java.model.entity.User;

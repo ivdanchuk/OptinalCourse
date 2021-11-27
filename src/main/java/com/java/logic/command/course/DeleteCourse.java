@@ -9,6 +9,7 @@ import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.UserManager;
+import com.java.service.SessionService;
 
 public class DeleteCourse implements ActionCommand {
 
@@ -19,8 +20,13 @@ public class DeleteCourse implements ActionCommand {
 	public String execute(HttpServletRequest request) {
 		String page = null;
 		Long id = Long.parseLong(request.getParameter(PARAM_NAME_ID));
-		CourseManager.getInstance().deleteCourseById(id);
-		page = Path.COMMAND__READ_COURSES;
+		if (CourseManager.getInstance().deleteCourseById(id)) {
+			page = Path.COMMAND__READ_COURSES;
+			SessionService.UpdateCourses(request);
+		} else {
+			page = Path.PAGE__ERROR_PAGE;
+			request.getSession().setAttribute("errorMessage", "Can't delete row, see log for details");
+		}
 		return page;
 	}
 }

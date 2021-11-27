@@ -236,10 +236,12 @@ public class CourseDaoImpl implements CourseDao {
 	@Override
 	public void deleteById(Connection conn, Long id) throws DaoException {
 		PreparedStatement ps = null;
+		int rowCount = 0;
 		try {
 			ps = conn.prepareStatement(SQL_DELETE_COURSE_BY_ID);
 			ps.setLong(1, id);
-			ps.executeUpdate();
+			rowCount = ps.executeUpdate();
+			int rowCount2 = 0;
 		} catch (SQLException e) {
 			throw new DaoException("CourseDao#can't execute delete method", e);
 		} finally {

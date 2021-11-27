@@ -262,11 +262,13 @@ public class CourseManager {
 		}
 	}
 
-	public void deleteCourseById(long id) {
+	public boolean deleteCourseById(long id) {
 		Connection conn = null;
+		boolean result = false;
 		try {
 			conn = connectionPool.getConnection();
 			courseDaoImpl.deleteById(conn, id);
+			result = true;
 		} catch (DaoException e) {
 			log.error("CourseManager#DeleteCourse: can't delete course", e);
 		} finally {
@@ -278,6 +280,7 @@ public class CourseManager {
 				log.error("CourseManager#DeleteCourse: can't close connection", e);
 			}
 		}
+		return result;
 	}
 
 	public Course FindCourseById(long id) {

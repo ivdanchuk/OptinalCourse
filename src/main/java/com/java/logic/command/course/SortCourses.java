@@ -1,4 +1,4 @@
-package com.java.logic.command;
+package com.java.logic.command.course;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.java.constant.Path;
+import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.entity.Course;
 

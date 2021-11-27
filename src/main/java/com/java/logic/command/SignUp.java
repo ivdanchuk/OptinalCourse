@@ -4,6 +4,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
+import com.java.config.MessageManager;
 import com.java.constant.Path;
 import com.java.model.UserManager;
 import com.java.model.entity.User;

@@ -4,6 +4,7 @@ import com.java.logic.command.course.CreateCourse;
 import com.java.logic.command.course.DeleteCourse;
 import com.java.logic.command.course.ReadCourse;
 import com.java.logic.command.course.ReadCourses;
+import com.java.logic.command.course.SortCourses;
 import com.java.logic.command.course.UpdateCourse;
 import com.java.logic.command.topic.CreateTopic;
 import com.java.logic.command.topic.DeleteTopic;
@@ -14,7 +15,6 @@ import com.java.logic.command.user.CreateUser;
 import com.java.logic.command.user.DeleteUser;
 import com.java.logic.command.user.ReadUser;
 import com.java.logic.command.user.ReadUserCourses;
-import com.java.logic.command.user.ReadUsers;
 import com.java.logic.command.user.ReadUsers2;
 import com.java.logic.command.user.RegUserForCourse;
 import com.java.logic.command.user.UnregUserForCourse;
@@ -100,12 +100,6 @@ public enum CommandEnum {
 	READ_USER {
 		{
 			this.command = new ReadUser();
-		}
-	},
-
-	READ_USERS {
-		{
-			this.command = new ReadUsers();
 		}
 	},
 

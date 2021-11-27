@@ -108,11 +108,13 @@ public class UserManager {
 		}
 	}
 
-	public void UpdateUser(User user) {
+	public boolean UpdateUser(User user) {
 		Connection conn = null;
+		boolean result = false;
 		try {
 			conn = connectionPool.getConnection();
 			userDaoImpl.update(conn, user);
+			result = true;
 		} catch (DaoException e) {
 			log.error("UserManager#UpdateUser: can't update user", e);
 		} finally {
@@ -124,6 +126,7 @@ public class UserManager {
 				log.error("UserManager#UpdateUser: can't close connection", e);
 			}
 		}
+		return result;
 	}
 
 	public boolean DeleteUser(long id) {

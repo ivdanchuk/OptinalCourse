@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.java.config.MessageManager;
 import com.java.controller.WebController;
 
 public class ActionFactory {

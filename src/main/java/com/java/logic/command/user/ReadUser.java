@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.java.constant.Path;
-import com.java.constant.Role;
+import com.java.constant.RoleConstant;
 import com.java.filter.EncodingFilter;
 import com.java.logic.command.ActionCommand;
 import com.java.model.RoleManager;
@@ -30,7 +30,7 @@ public class ReadUser implements ActionCommand {
 		}
 
 		path = Path.PAGE__USER;
-		if (Role.ROLE_ADMIN_ID != currentRole.getId()) {
+		if (RoleConstant.ROLE_ADMIN_ID != currentRole.getId()) {
 			currentUser = UserManager.getInstance().FindUserById(currentUser.getId());
 			currentRole = RoleManager.getInstance().FindRoleById(currentUser.getRole_id());
 			request.getSession().setAttribute("selectedUser", currentUser);

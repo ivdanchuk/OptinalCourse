@@ -8,6 +8,7 @@ import com.java.constant.Path;
 import com.java.logic.command.ActionCommand;
 import com.java.model.CourseManager;
 import com.java.model.entity.Course;
+import com.java.service.SessionService;
 
 public class CreateCourse implements ActionCommand {
 	private static final String PARAM_NAME_ID = "id";
@@ -31,6 +32,7 @@ public class CreateCourse implements ActionCommand {
 		Course course = new Course(id, name, duration, start_date, end_date, topic_id, user_id);
 		CourseManager.getInstance().CreateCourse(course);
 		page = Path.COMMAND__READ_COURSES;
+		SessionService.UpdateCourses(request);
 		return page;
 	}
 }

@@ -5,13 +5,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.java.config.MessageManager;
 import com.java.constant.Path;
 import com.java.controller.WebController;
 import com.java.logic.command.ActionCommand;
-import com.java.logic.command.MessageManager;
 import com.java.model.UserManager;
 import com.java.model.entity.User;
-import com.java.service.UpdateSession;
+import com.java.service.SessionService;
 
 public class CreateUser implements ActionCommand {
 	private static final String PARAM_NAME_ID = "id";
@@ -42,7 +42,7 @@ public class CreateUser implements ActionCommand {
 		if (roleId != null) {
 			user = new User(-1l, fname, lname, email, pass, Long.parseLong(roleId));
 			UserManager.getInstance().CreateUser(user);
-			UpdateSession.UpdateTutors(request);
+			SessionService.UpdateTutors(request);
 			page = Path.COMMAND__READ_USERS2;
 		} else {
 			Log.error("CreateUser#execute" + "Can't create user, see logs for details.");

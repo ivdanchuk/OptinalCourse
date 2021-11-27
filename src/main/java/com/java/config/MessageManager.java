@@ -1,4 +1,4 @@
-package com.java.logic.command;
+package com.java.config;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

@@ -37,8 +37,17 @@
 
 		  		<label for="tutorId">Select tutor:</label>
 		  		<select class="form-control" id="tutorId" name="tutorId">
+						<c:choose>
+						     <c:when test="${tutorIdForSorting == '0' }" >
+								<option selected="selected" value ="0">All tutors</option>
+						     </c:when>
+						     <c:otherwise>
+								<option value ="0">All tutors</option>
+						     </c:otherwise>
+						 </c:choose>
+
 				    <c:forEach var="tutor" items = "${tutors}">
-						<option value ="0">All tutors</option>
+						<!--  <option value ="0">All tutors</option> -->
 						<c:choose>
 						     <c:when test="${tutor.id == tutorIdForSorting}" >
 				    			<option selected="selected" value ="${tutor.id}">${tutor.f_name}</option>
@@ -113,10 +122,12 @@
                                 </tr>
                             </thead>
                             <c:forEach var="course" items="${courses}">
+                                 
                                 <c:set var="classSucess" value=""/>
                                 <c:if test ="${id == course.id}">                        	
                                     <c:set var="classSucess" value="info"/>
                                 </c:if>
+                               
                                 <tr class="${classSucess}">
                                     
                                     <td>
@@ -143,7 +154,7 @@
 
                                     <td>${course.counter}</td>
                                     <td>
-                                        <a href="controller?id=${course.id}&command=delete_course"><span class="glyphicon glyphicon-trash"/></a>
+ 	                                        <a href="controller?id=${course.id}&command=delete_course"><span class="glyphicon glyphicon-trash"/></a>
                                     </td>                                    
                                 </tr>
                             </c:forEach>               

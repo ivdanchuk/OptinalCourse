@@ -2,16 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-	<!--  
-    <head>
-        <link rel="stylesheet" href="/optinal-course/css/bootstrap.min.css">   		
-        <script src="/optinal-course/js/bootstrap.min.js"></script>     
-    </head>
-	-->
 	<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
 <body>
         <div class="container">
-            	<form action="/optinal-course/controller" method="post" role="form" data-toggle="validator" >
+            	<form action="${context}/controller" method="post" role="form" data-toggle="validator" >
                	<input type="hidden" id="command" name="command" value="create_course">
                 <input type="hidden" id="id" name="id" value="">
                 
@@ -19,7 +13,7 @@
                 <div class="form-group col-xs-4">
 
                     <label for="name" class="control-label col-xs-4">Name:</label>
-                    <input type="text" name="name" id="name" class="form-control" pattern="[A-Za-z0-9#+\s]{2,128}" value="${course.name}" required="true"/>                                   
+                    <input type="text" name="name" id="name" class="form-control" pattern="[A-Za-z0-9#+,\s]{2,128}" value="${course.name}" required="true"/>                                   
                     
                     <label for="duration" class="control-label col-xs-4">Duration (h):</label>
                     <input type="number" name="duration" id="duration" min="1" max="100" class="form-control" value="${course.duration}" required="false"/>                                   
@@ -43,7 +37,7 @@
 								<option value="${tutor.id}">${tutor.f_name}</option>
                             </c:forEach>               
 					</select>						
-                    <br></br>
+                    <br>
                     <button type="submit" class="btn btn-primary  btn-md">Accept</button> 
                 </div>                                                      
             </form>

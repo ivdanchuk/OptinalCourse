@@ -3,10 +3,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <head>
-	<link rel="stylesheet" href="/optinal-course/css/bootstrap.min.css">   		
-    <script src="/optinal-course/js/bootstrap.min.js"></script>     
+	<link rel="stylesheet" href="${context}/css/bootstrap.min.css">   		
+    <script src="${context}/js/bootstrap.min.js"></script>     
 
 	<title>W3.CSS</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,26 +16,48 @@
 	<div class="w3-container">
 		<h2>Optional course</h2>
 		<div class="w3-bar w3-light-grey w3-border">
-			<a href="/optinal-course/controller?command=read_users2"
-				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.users"/></a> <a
-				href="/optinal-course/controller?command=read_user_courses"
-				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.mylearning"/></a> <a
-				href="/optinal-course/controller?command=show_tutor_reg_form"
-				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.mytutoring"/></a> <a
-				href="/optinal-course/controller?command=read_topics"
-				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.utopics"/></a> <a
-				href="/optinal-course/controller?command=read_courses"
-				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.ucourses"/></a> <a
-				href="/optinal-course/controller?command=read_user&userIdForUpdate=${currentUser.id}"
-				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.myaccount"/></a> <a
-				href="/optinal-course/controller?command=logout"
-				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.logout"/></a> 
+				
+				<c:choose>
+    			<c:when test="${currentRole.id=='2'}">
+					<a href="${context}/controller?command=show_tutor_reg_form"
+					class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.mytutoring"/></a> 
+    			</c:when>    
+    			<c:when test="${currentRole.id=='3'}">
+					<a href="${context}/controller?command=read_student_courses"
+					class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.mylearning"/></a> 
+    			</c:when>    
+    			<c:otherwise>
+					<!--
+					-->
+					<a href="${context}/controller?command=read_users"
+					class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.users"/></a> 
+					  	
+					<a href="${context}/controller?command=show_tutor_reg_form"
+					class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.mytutoring"/></a> 
+
+					<a href="${context}/controller?command=read_student_courses"
+					class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.mylearning"/></a> 
+        		</c:otherwise>
+				</c:choose>
+				
+				<a href="${context}/controller?command=read_topics"
+				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.utopics"/></a> 
+				
+				<a href="${context}/controller?command=read_courses"
+				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.ucourses"/></a> 
+				
+				<a href="${context}/controller?command=read_user&userIdForUpdate=${currentUser.id}"
+				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.myaccount"/></a> 
+				
+				<a href="${context}/controller?command=logout"
+				class="w3-bar-item w3-button w3-mobile"><fmt:message key="main.menu.button.logout"/>
+				</a> 
 				
 				<input type="text" class="w3-bar-item w3-input w3-white w3-mobile"
 				placeholder="Search..">
 				<button class="w3-bar-item w3-button w3-green w3-mobile">Go</button>
 			
-			 	<form action="/optinal-course/controller">
+			 	<form action="${context}/controller">
 					<input type="hidden" name="command" value="i18n" />
 			      	<label for="langParam"></label>	
 	      			<select id="langParam" name="langParam" onchange="this.form.submit()" class="w3-bar-item w3-button w3-white w3-mobile">

@@ -50,7 +50,6 @@
                 </c:choose>                        
             </form>
             <form action ="jsp/topic.jsp">            
-                <br></br>
                 <button type="submit" class="btn btn-primary  btn-md">New topic</button> 
             </form>
 		</div>

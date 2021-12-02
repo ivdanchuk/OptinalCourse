@@ -3,10 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html>
+    <c:set var="context" value="${pageContext.request.contextPath}" scope="session"/>
 	<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
-<body>
-</body>
+<html>
+	<body>
+	</body>
 </html>
-	<br>
 	<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>
+	<br>

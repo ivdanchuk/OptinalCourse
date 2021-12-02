@@ -16,7 +16,7 @@
                 <div class="form-group col-xs-4">
 
                     <label for="name" class="control-label">Name:</label>
-                    <input type="text" name="name" id="name" class="form-control" pattern="[A-Za-z0-9#+\s]{2,128}" value="${course.name}" required="true"/>                                   
+                    <input type="text" name="name" id="name" class="form-control" pattern="[A-Za-z0-9#+,\s]{2,128}" value="${course.name}" required="true"/>                                   
                     
                     <label for="duration" class="control-label">Duration (h):</label>
                     <input type="number" name="duration" id="duration" min="1" max="100" class="form-control" value="${course.duration}" required="false"/>                                   

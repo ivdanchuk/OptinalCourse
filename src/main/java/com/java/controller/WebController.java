@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.java.config.ConfigurationManager;
-import com.java.config.MessageManager;
-import com.java.logic.command.ActionCommand;
-import com.java.logic.command.ActionFactory;
+import com.java.model.command.IActionCommand;
+import com.java.model.command.ActionFactory;
+import com.java.model.config.ConfigurationManager;
+import com.java.model.config.MessageManager;
 
 @WebServlet("/controller")
 public class WebController extends HttpServlet {
@@ -27,8 +27,7 @@ public class WebController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String address = null;
 		ActionFactory client = new ActionFactory();
-		ActionCommand command = client.defineCommand(req);
-		// page = null; ?
+		IActionCommand command = client.defineCommand(req);
 		address = command.execute(req);
 		Log.debug("WebController#doGet address:" + address);
 		req.getRequestDispatcher(address).forward(req, resp);
@@ -37,7 +36,7 @@ public class WebController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String address = null;
 		ActionFactory client = new ActionFactory();
-		ActionCommand command = client.defineCommand(req);
+		IActionCommand command = client.defineCommand(req);
 		address = command.execute(req);
 		if (address != null) {
 			Log.debug("WebController#doPost address:" + address);
@@ -55,15 +54,11 @@ public class WebController extends HttpServlet {
 
 		String page = null;
 		ActionFactory client = new ActionFactory();
-		ActionCommand command = client.defineCommand(request);
+		IActionCommand command = client.defineCommand(request);
 
-		// page = null ?;
 		page = command.execute(request);
 		Log.debug("Controller#processRequest page:" + page);
-//		return page;
 		if (page != null) {
-//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
-//			dispatcher.forward(request, response);
 			request.getRequestDispatcher(page).forward(request, response);
 
 		} else {

@@ -128,10 +128,10 @@
 
 			<c:choose>
 			     <c:when test='${selectedPage == 1}' >
-			  		<a href="/optinal-course/controller?command=read_users2&page=1">&laquo</a>
+			  		<a href="/optinal-course/controller?command=read_users&page=1">&laquo</a>
 			     </c:when>
 			     <c:otherwise>
-			  		<a href="/optinal-course/controller?command=read_users2&page=${selectedPage-1}">&laquo</a>
+			  		<a href="/optinal-course/controller?command=read_users&page=${selectedPage-1}">&laquo</a>
 			     </c:otherwise>
 			 </c:choose>
 
@@ -139,20 +139,20 @@
  		  <c:forEach var = 'i' begin = '1' end = '${pages}'>
 			<c:choose>
 			     <c:when test='${selectedPage == i}' >
-			  		<a class="active" href="/optinal-course/controller?command=read_users2&page=${i}">${i}</a>
+			  		<a class="active" href="/optinal-course/controller?command=read_users&page=${i}">${i}</a>
 			     </c:when>
 			     <c:otherwise>
-			  		<a href="/optinal-course/controller?command=read_users2&page=${i}">${i}</a>
+			  		<a href="/optinal-course/controller?command=read_users&page=${i}">${i}</a>
 			     </c:otherwise>
 			 </c:choose>
  	      </c:forEach>
 
 			<c:choose>
 			     <c:when test='${selectedPage == pages}' >
-			  		<a href="/optinal-course/controller?command=read_users2&page=${pages}">&raquo</a>
+			  		<a href="/optinal-course/controller?command=read_users&page=${pages}">&raquo</a>
 			     </c:when>
 			     <c:otherwise>
-			  		<a href="/optinal-course/controller?command=read_users2&page=${selectedPage+1}">&raquo</a>
+			  		<a href="/optinal-course/controller?command=read_users&page=${selectedPage+1}">&raquo</a>
 			     </c:otherwise>
 			 </c:choose>
 		  </div>

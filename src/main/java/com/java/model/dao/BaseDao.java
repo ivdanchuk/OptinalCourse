@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
-import com.java.model.DaoException;
 import com.java.model.entity.Entity;
+import com.java.model.exception.DaoException;
 
 public interface BaseDao<K, T extends Entity> {
 	List<T> findAll(Connection conn) throws DaoException;

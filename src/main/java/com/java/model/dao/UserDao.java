@@ -3,8 +3,8 @@ package com.java.model.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.java.model.DaoException;
 import com.java.model.entity.User;
+import com.java.model.exception.DaoException;
 
 public interface UserDao extends BaseDao<Long, User> {
 

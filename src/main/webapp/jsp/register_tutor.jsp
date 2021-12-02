@@ -63,7 +63,7 @@
                     <c:otherwise>
                         <br>           
                         <div class="alert alert-info">
-                            No user's courses found matching your search criteria.
+                            No student's registered found.
                         </div>
                     </c:otherwise>
                 </c:choose>                        

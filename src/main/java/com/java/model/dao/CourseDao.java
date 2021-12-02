@@ -3,10 +3,10 @@ package com.java.model.dao;
 import java.sql.Connection;
 import java.util.List;
 
-import com.java.model.DaoException;
 import com.java.model.dto.CourseOfStudent;
 import com.java.model.dto.StudentOfCourse;
 import com.java.model.entity.Course;
+import com.java.model.exception.DaoException;
 
 public interface CourseDao extends BaseDao<Long, Course> {
 	public List<CourseOfStudent> findAllStudentCourses(Connection conn, long userId) throws DaoException;

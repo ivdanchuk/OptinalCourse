@@ -1,4 +1,4 @@
-package com.java.model;
+package com.java.model.exception;
 
 public class DaoException extends Exception {
 

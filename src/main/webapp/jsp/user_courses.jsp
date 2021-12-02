@@ -15,7 +15,7 @@
 
             <!--Get option Form--> 
             <form class="form-inline" form action="controller" method="get" id="userCoursesForm" role="form" >              
-    		<input type="hidden" id="command" name="command" value="read_user_courses">  
+    		<input type="hidden" id="command" name="command" value="read_student_courses">  
     		<input type="hidden" id="courseId" name="courseId" value="">
 			<div class="form-group mb-2 mr-sm-2">
 
@@ -103,7 +103,7 @@
                                     <td>${course.state}</td>
                                     <td>${course.mark}</td>
                                     <td><a href="#" id="delete" 
-                                           onclick="document.getElementById('command').value ='unreg_user_for_course';
+                                           onclick="document.getElementById('command').value ='unreg_student_for_course';
                                            document.getElementById('courseId').value = '${course.id}';
                                            document.getElementById('userCoursesForm').submit();"> 
                     	                        <span class="glyphicon glyphicon-trash"/>

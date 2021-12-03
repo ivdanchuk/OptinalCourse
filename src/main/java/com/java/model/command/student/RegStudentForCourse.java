@@ -17,7 +17,6 @@ public class RegStudentForCourse implements IActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		String path = Path.PAGE__ERROR_PAGE;
-
 		User currenttUser = (User) request.getSession().getAttribute("currentUser");
 		long courseId = Long.parseLong(request.getParameter(PARAM_NAME_COURSE_ID));
 

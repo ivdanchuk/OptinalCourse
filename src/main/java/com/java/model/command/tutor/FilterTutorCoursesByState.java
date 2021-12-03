@@ -8,18 +8,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.java.model.command.IActionCommand;
+import com.java.model.constant.CourseStateConstant;
 import com.java.model.constant.Path;
 import com.java.model.dao.impl.CourseDaoImpl;
 import com.java.model.dao.manager.CourseManager;
-import com.java.model.dto.StudentOfCourse;
+import com.java.model.entity.Course;
 import com.java.model.entity.User;
 
-public class ShowTutorRegForm implements IActionCommand {
+public class FilterTutorCoursesByState implements IActionCommand {
 	private static final Logger logger = LogManager.getLogger(CourseDaoImpl.class.getName());
 
 	@Override
 	public String execute(HttpServletRequest request) {
 		String path = Path.PAGE__ERROR_PAGE;
+
 		User currentUser = (User) request.getSession().getAttribute("currentUser");
 		if (currentUser == null) {
 			String errorMessage = "showTutorRegForm: currentUser is null, can't execute command, redirect to error page";
@@ -28,15 +30,22 @@ public class ShowTutorRegForm implements IActionCommand {
 			return path;
 		}
 
-		String courseId = request.getParameter("courseId");
-		if (courseId != null) {
-			List<StudentOfCourse> usersOfCourse = CourseManager.getInstance().findCourseUsers(Long.parseLong(courseId));
-			request.getSession().setAttribute("usersOfCourse", usersOfCourse);
-			request.getSession().setAttribute("CourseId", courseId);
+		int CourseState = CourseStateConstant.COURSE_ALL;
+		String CourseStateParam = request.getParameter("CourseStateId");
+		if (CourseStateParam != null) {
+			CourseState = Integer.parseInt(CourseStateParam);
 		}
+		request.getSession().setAttribute("CourseStateId", CourseState);
+
+		long userId = currentUser.getId();
+		List<Course> tutorCourses = CourseManager.getInstance().findTutorCourses(userId, CourseState);
+		request.getSession().setAttribute("tutorCourses", tutorCourses);
+		request.getSession().setAttribute("usersOfCourse", null);
 
 		path = Path.PAGE__REGISTER_TUTOR;
 
 		return path;
+
 	}
+
 }

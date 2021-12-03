@@ -94,12 +94,12 @@ public class CourseManager {
 		return courses;
 	}
 
-	public List<Course> findTutorCourses(long userId) {
+	public List<Course> findTutorCourses(long userId, int state) {
 		Connection conn = null;
 		List<Course> userCourses = new ArrayList<>();
 		try {
 			conn = connectionPool.getConnection();
-			userCourses = courseDaoImpl.findTutorCourses(conn, userId);
+			userCourses = courseDaoImpl.findTutorCourses(conn, userId, state);
 		} catch (DaoException e) {
 			log.error("CourseManager#findTutorCourses: can't find tutor's courses");
 		} finally {

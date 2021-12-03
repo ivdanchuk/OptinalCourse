@@ -3,38 +3,64 @@
 <html>
 	<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
 	<body>
-	<div class="w3-container">
-
 		<div class="container">
-			<br>
 			<h2>Tutor's register</h2>
-			<br>
-			<form class="form-inline" action="/optinal-course/controller">
-    		<!--<input type="hidden" id="command" name="command" value="read_users_of_course">-->  
-    		<input type="hidden" id="command" name="command" value="show_tutor_reg_form">  
-
+			
+			<form class="form-inline" method="get" action="${context}/controller" style ='float: left; padding: 5px;'>
+    			<input type="hidden" id="command" name="command" value="show_tutor_reg_form">  
 				<label for="courseId">Course:</label>
 						<select class="form-control" id="courseId" name="courseId">
 							<c:forEach var="course" items="${tutorCourses}">
-								<option value="${course.id}">${course.name}</option>
+								<c:choose>
+								    <c:when test="${course.id == CourseId}">
+										<option value="${course.id}" selected="selected">${course.name}</option>
+								    </c:when>    
+								    <c:otherwise>
+										<option value="${course.id}">${course.name}</option>
+								    </c:otherwise>
+								</c:choose>								
+
 							</c:forEach>               
 						</select>								
-				<button type="submit" class="btn btn-primary">Select course</button>
+				<button type="submit" class="btn btn-primary">Get students of selected course</button>
 			</form>
 			
+			<form class="form-inline" action="${context}/controller" style ='float: left; padding: 5px;'>
+    			<input type="hidden" id="command" name="command" value="filter_tutor_courses_by_state">  
+				<label for="CourseState">State:</label>
+						<c:if test="${empty CourseStateId}">
+    						<c:set var="CourseStateId" value="${4}"/>
+						</c:if>								
+						<select class="form-control" id="CourseStateId" name="CourseStateId">													
+							<c:forEach var="courseState" items="${coursesState}">
+								<c:choose>
+								    <c:when test="${courseState.id == CourseStateId}">
+										<option value="${courseState.id}" selected="selected">${courseState.name}</option>								    
+								    </c:when>    
+								    <c:otherwise>
+										<option value="${courseState.id}">${courseState.name}</option>
+								    </c:otherwise>
+								</c:choose>								
+							</c:forEach>               
+						</select>								
+				
+				<button type="submit" class="btn btn-primary">Filter by state</button>
+			</form>			
+			<br>            
+
             <form action="controller" method="get" id="tutorReg" role="form" >              
 	    		<input type="hidden" id="command" name="command" value="">  
 	    		<input type="hidden" id="userId" name="userId" value="">  
 	    		<input type="hidden" id="courseId" name="courseId" value="">  
 	    		<input type="hidden" id="userMark" name="userMark" value="">  
-
                 <c:choose>
                     <c:when test="${not empty usersOfCourse}">
                         <table  class="table table-striped">
                             <thead>
                                 <tr>
-                                    <td>userId</td>
-                                    <td>courseId</td>
+                                    <td>#</td>
+                                    <td>Student id</td>
+                                    <td>Course id</td>
                                     <td>First name</td>
                                     <td>Last name</td>
                                     <td>Email</td>
@@ -42,8 +68,12 @@
                                     <td>Mark</td>
                                 </tr>
                             </thead>
+
+                            <c:set var="count" value="0" scope="page" />
                             <c:forEach var="user" items="${usersOfCourse}">
                                 <tr>
+                                    <c:set var="count" value="${count + 1}"/>
+                                    <td>${count}</td>
                                     <td>
                                        ${user.user_id}
                                     </td>                                    
@@ -68,9 +98,7 @@
                     </c:otherwise>
                 </c:choose>                        
             </form>
-            
-		</div>
-		<br	>
-	</body>
-	<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>
+    	</div>
+		<jsp:include page="/jsp/templates/footer.jsp"></jsp:include>
+</body>
 </html>

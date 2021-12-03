@@ -32,7 +32,7 @@ public class LoginCommandTest {
 		when(request.getParameter("password")).thenReturn("1");
 
 		userService = mock(UserService.class);
-		when(userService.getValidUser(anyString(), anyString(), Mockito.any(StringBuilder.class))).thenReturn(null);
+		when(userService.getAuthorizedUser(anyString(), anyString(), Mockito.any(StringBuilder.class))).thenReturn(null);
 	}
 
 	@Test

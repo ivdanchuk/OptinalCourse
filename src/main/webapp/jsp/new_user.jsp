@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" 
 	uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
 <html>
     <head>
 		<jsp:include page="/jsp/templates/header.jsp"></jsp:include>
@@ -25,7 +24,7 @@
 
                     <label for="password" class="control-label col-xs-4">Password:</label>                   
                     <input type="password" name="password" id="password" class="form-control" pattern="[a-zA-Z0-9]{3,64}" value="" required="true"/> 
-
+	
                     <label for="role" class="control-label col-xs-4">Role:</label>                    
 					<select class="form-control" id="role_id" name="role_id">
 							<c:forEach var="role" items="${roles}">

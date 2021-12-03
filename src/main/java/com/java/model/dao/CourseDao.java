@@ -13,7 +13,8 @@ public interface CourseDao extends BaseDao<Long, Course> {
 
 	public void registerStudentForCourse(Connection conn, long userId, long courseId) throws DaoException;
 
-	List<Course> findTutorCourses(Connection conn, long userId) throws DaoException;
+	// List<Course> findTutorCourses(Connection conn, long userId) throws
+	// DaoException;
 
 	void unregisterStudentForCourse(Connection conn, long userId, long courseId) throws DaoException;
 
@@ -23,8 +24,10 @@ public interface CourseDao extends BaseDao<Long, Course> {
 
 	void setMarkForStudent(Connection conn, long userId, long courseId, int mark) throws DaoException;
 
-	List<CourseOfStudent> findCoursesOfStudentWithStateFilter(Connection conn, long userId, int state) throws DaoException;
+	List<CourseOfStudent> findCoursesOfStudentWithStateFilter(Connection conn, long userId, int state)
+			throws DaoException;
 
 	List<Course> findAllNotStartedCourses(Connection conn) throws DaoException;
 
+	List<Course> findTutorCourses(Connection conn, long userId, int state) throws DaoException;
 }

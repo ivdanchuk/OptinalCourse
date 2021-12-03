@@ -32,6 +32,26 @@ public class UserManager {
 		return instance;
 	}
 
+	public Long RowCount() {
+		Long rowCount = 0l;
+		Connection conn = null;
+		try {
+			conn = connectionPool.getConnection();
+			rowCount = userDaoImpl.getRowCount(conn);
+		} catch (DaoException e) {
+			log.error("UserManager#RowCount: can't get row count");
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("UserManager#RowCount: can't get row count");
+			}
+		}
+		return rowCount;
+	}
+
 	public List<User> listAllUsersByRoleID(long roleId) {
 		Connection conn = null;
 		List<User> users = new ArrayList<>();

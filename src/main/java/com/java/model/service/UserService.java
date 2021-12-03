@@ -11,16 +11,13 @@ import com.java.model.entity.User;
 public class UserService {
 	private final static Logger log = LogManager.getLogger(ReadCourses.class);
 
-//	public static boolean isPassValid(String pass, User user) {
-
-	public boolean isPassValid(String pass, User user) {
+	public boolean isPassAuthorized(String pass, User user) {
 		if (user.getPassword().equals(pass)) {
 			return true;
 		}
 		return false;
 	}
 
-//	public static boolean isEmptyUser(User user) {
 	public boolean isEmptyUser(User user) {
 		if ((user.getEmail() == null) || (user.getPassword() == null)) {
 			return true;
@@ -28,7 +25,6 @@ public class UserService {
 		return false;
 	}
 
-//	public static boolean isExistUser(String email) {
 	public boolean isExistUser(String email) {
 		User user = UserManager.getInstance().FindUserByEmail(email);
 		if (!isEmptyUser(user)) {
@@ -37,8 +33,7 @@ public class UserService {
 		return false;
 	}
 
-//	public static User getValidUser(String email, String pass, StringBuilder message) {
-	public User getValidUser(String email, String pass, StringBuilder message) {
+	public User getAuthorizedUser(String email, String pass, StringBuilder message) {
 		User user = UserManager.getInstance().FindUserByEmail(email);
 		if (isEmptyUser(user)) {
 			message.append("There is no such login");
@@ -46,7 +41,7 @@ public class UserService {
 		}
 
 		String hashPass = PasswordService.hash(pass);
-		if (!isPassValid(hashPass, user)) {
+		if (!isPassAuthorized(hashPass, user)) {
 			message.append("Password is not correct");
 			return null;
 		}
@@ -57,9 +52,4 @@ public class UserService {
 		}
 		return user;
 	}
-//	public void setCurrentUser(User user, HttpServletRequest request) {
-//		// SessionService.setCurrentUser(request, user);
-//		request.getSession().setAttribute("currentUser", user);
-//		request.getSession().setAttribute("currentRole", user.getRole_id());
-//	}
 }

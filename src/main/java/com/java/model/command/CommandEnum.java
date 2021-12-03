@@ -17,6 +17,7 @@ import com.java.model.command.topic.DeleteTopic;
 import com.java.model.command.topic.ReadTopic;
 import com.java.model.command.topic.ReadTopics;
 import com.java.model.command.topic.UpdateTopic;
+import com.java.model.command.tutor.FilterTutorCoursesByState;
 import com.java.model.command.tutor.SetMark;
 import com.java.model.command.tutor.ShowMarkForm;
 import com.java.model.command.tutor.ShowTutorRegForm;
@@ -166,6 +167,12 @@ public enum CommandEnum {
 			this.command = new ShowMarkForm();
 		}
 	},
+	FILTER_TUTOR_COURSES_BY_STATE {
+		{
+			this.command = new FilterTutorCoursesByState();
+		}
+	},
+
 	SET_MARK {
 		{
 			this.command = new SetMark();

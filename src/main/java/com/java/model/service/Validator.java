@@ -12,7 +12,7 @@ public class Validator {
 		}
 
 		String regexPattern = "^(?=.{1,32}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
-				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+				+ "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,4})$";
 		return Pattern.compile(regexPattern).matcher(email).matches();
 	}
 
@@ -20,7 +20,7 @@ public class Validator {
 		if (name == null) {
 			return false;
 		}
-		String regexPattern = "^[A-Za-z]\\w{5,64}$";
+		String regexPattern = "^[a-zA-z][a-zA-z0-9- ]{2,64}$";
 		return Pattern.compile(regexPattern).matcher(name).matches();
 	}
 

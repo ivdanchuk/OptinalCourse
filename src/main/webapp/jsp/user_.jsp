@@ -1,17 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<html>
+    <head>
+    	<link rel="stylesheet" href="/optinal-course/css/bootstrap.min.css">   		
+		<script src="/optinal-course/js/bootstrap.min.js"></script>     
+    </head>
 
-<html><head><title>Login</title>
-<head>
- 	<c:set var="context" value="${pageContext.request.contextPath}"/>
-    <link rel="stylesheet" href="${context}/css/bootstrap.min.css">   		
-	<script src="${context}/js/bootstrap.min.js"></script>     
-</head>
-</head>
 <body>
-<div class="container">
-	<br>
 	<div class="form-group col-xs-3">
 		<form name="loginForm" method="post" action="${context}/controller">
 			<input type="hidden" id ="command" name="command" value="login" />
@@ -48,4 +44,8 @@
 		<br><br>
 
 	</div>
-</body></html>
+</body>
+</html>
+
+
+

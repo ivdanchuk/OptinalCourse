@@ -31,7 +31,7 @@ public class LoginCommand implements IActionCommand {
 			return page;
 		}
 
-		User user = userService.getValidUser(email, pass, message);
+		User user = userService.getAuthorizedUser(email, pass, message);
 
 		if (user != null) {
 			SessionService.setCurrentUser(request, user);

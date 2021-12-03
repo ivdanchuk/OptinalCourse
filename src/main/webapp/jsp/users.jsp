@@ -6,8 +6,8 @@
 		<script src="js/bootstrap.min.js"></script>       
 	</head>
 <title>W3.CSS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 <style>
 .center {
@@ -125,13 +125,12 @@
 
 		<div class="center">
 		  <div class="pagination">
-
 			<c:choose>
 			     <c:when test='${selectedPage == 1}' >
-			  		<a href="/optinal-course/controller?command=read_users&page=1">&laquo</a>
+			  		<a href="${context}/controller?command=read_users&page=1">&laquo</a>
 			     </c:when>
 			     <c:otherwise>
-			  		<a href="/optinal-course/controller?command=read_users&page=${selectedPage-1}">&laquo</a>
+			  		<a href="${context}/controller?command=read_users&page=${selectedPage-1}">&laquo</a>
 			     </c:otherwise>
 			 </c:choose>
 
@@ -139,20 +138,20 @@
  		  <c:forEach var = 'i' begin = '1' end = '${pages}'>
 			<c:choose>
 			     <c:when test='${selectedPage == i}' >
-			  		<a class="active" href="/optinal-course/controller?command=read_users&page=${i}">${i}</a>
+			  		<a class="active" href="${context}/controller?command=read_users&page=${i}">${i}</a>
 			     </c:when>
 			     <c:otherwise>
-			  		<a href="/optinal-course/controller?command=read_users&page=${i}">${i}</a>
+			  		<a href="${context}/controller?command=read_users&page=${i}">${i}</a>
 			     </c:otherwise>
 			 </c:choose>
  	      </c:forEach>
 
 			<c:choose>
 			     <c:when test='${selectedPage == pages}' >
-			  		<a href="/optinal-course/controller?command=read_users&page=${pages}">&raquo</a>
+			  		<a href="${context}/controller?command=read_users&page=${pages}">&raquo</a>
 			     </c:when>
 			     <c:otherwise>
-			  		<a href="/optinal-course/controller?command=read_users&page=${selectedPage+1}">&raquo</a>
+			  		<a href="${context}/controller?command=read_users&page=${selectedPage+1}">&raquo</a>
 			     </c:otherwise>
 			 </c:choose>
 		  </div>

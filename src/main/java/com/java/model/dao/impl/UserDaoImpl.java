@@ -27,6 +27,7 @@ public class UserDaoImpl implements UserDao {
 	public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM USERS WHERE id=?";
 	public static final String SQL_UPDATE_USER_BY_ID = "UPDATE USERS SET f_name=?,l_name=?,email=?,password=?,role_id=?  WHERE id=?";
 	public static final String SQL_INSERT_USER = "INSERT INTO USERS (f_name,l_name,email,password,role_id)values (?,?,?,?,?)";
+	public static final String SQL_GET_ROWCOUNT = "SELECT COUNT(*) FROM users;";
 
 	private UserDaoImpl() {
 	}
@@ -36,6 +37,27 @@ public class UserDaoImpl implements UserDao {
 			instance = new UserDaoImpl();
 		}
 		return instance;
+	}
+
+	@Override
+	public Long getRowCount(Connection conn) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		Long rowCount = 0l;
+		try {
+			ps = conn.prepareStatement(SQL_GET_ROWCOUNT);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				rowCount = rs.getLong(1);
+			}
+		} catch (SQLException e) {
+			logger.fatal("UserDao#getRowCount SQLException");
+			throw new DaoException("UserDao#RowCount:can't execute RowCount method", e);
+		} finally {
+			close(ps);
+			close(rs);
+		}
+		return rowCount;
 	}
 
 	@Override

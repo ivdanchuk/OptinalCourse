@@ -5,12 +5,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.java.model.constant.CourseStateConstant;
 import com.java.model.constant.RoleConstant;
 import com.java.model.dao.manager.CourseManager;
 import com.java.model.dao.manager.RoleManager;
 import com.java.model.dao.manager.TopicManager;
 import com.java.model.dao.manager.UserManager;
 import com.java.model.entity.Course;
+import com.java.model.entity.CourseState;
 import com.java.model.entity.Role;
 import com.java.model.entity.Topic;
 import com.java.model.entity.User;
@@ -22,6 +24,25 @@ public class SessionService {
 		request.getSession().setAttribute("tutors", tutors);
 	}
 
+	public static void setCoursesState(HttpServletRequest request) {
+		List<CourseState> coursesState = new ArrayList<>();
+
+		CourseState courseState = new CourseState(CourseStateConstant.COURSE_NOTSTARTED, "Not started");
+		coursesState.add(courseState);
+
+		courseState = new CourseState(CourseStateConstant.COURSE_STARTED, "In progress");
+		coursesState.add(courseState);
+
+		courseState = new CourseState(CourseStateConstant.COURSE_FINISHED, "Finished");
+		coursesState.add(courseState);
+
+		courseState = new CourseState(CourseStateConstant.COURSE_ALL, "All");
+		coursesState.add(courseState);
+
+		request.getSession().setAttribute("coursesState", coursesState);
+
+	}
+
 	public static void setCourses(HttpServletRequest request) {
 		List<Course> courses = new ArrayList<>();
 		courses = CourseManager.getInstance().findAllCourses();
@@ -29,6 +50,8 @@ public class SessionService {
 
 		courses = CourseManager.getInstance().findAllNotStartedCourses();
 		request.getSession().setAttribute("coursesNotStarted", courses);
+
+		setCoursesState(request);
 	}
 
 	public static void setTopics(HttpServletRequest request) {

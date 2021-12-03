@@ -30,6 +30,7 @@ public class CourseDaoImpl implements CourseDao {
 	public static final String SQL_UPDATE_COURSE_BY_ID = "UPDATE COURSES SET name=?,duration=?,start_date=?,end_date=?,topic_id=?,user_id=?  WHERE id=?";
 	public static final String SQL_INSERT_COURSE = "INSERT INTO COURSES (name,duration,start_date,end_date,topic_id,user_id)values (?,?,?,?,?,?)";
 	public static final String SQL_SELECT_TUTOR_COURSES = "SELECT * FROM courses WHERE user_id=?";
+	public static final String SQL_SELECT_TUTOR_COURSES_WITH_STATE = "SELECT * FROM courses WHERE (user_id=?)and(state=?)";
 
 	public static final String SQL_INSERT_COURSE_FOR_USER = "insert into m2m_users_courses (user_id,course_id) values (?,?)";
 	private static final String SQL_DELETE_COURSE_FOR_USER = "delete from m2m_users_courses where (user_id=?)and(course_id=?)";
@@ -89,6 +90,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
 				course.setCounter(rs.getLong("counter"));
+				course.setState(rs.getInt("state"));
 				courses.add(course);
 			}
 		} catch (SQLException e) {
@@ -152,6 +154,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
 				course.setCounter(rs.getLong("counter"));
+				course.setState(rs.getInt("state"));
 				courses.add(course);
 			}
 		} catch (SQLException e) {
@@ -265,7 +268,6 @@ public class CourseDaoImpl implements CourseDao {
 			close(rs);
 			close(ps);
 		}
-
 	}
 
 	@Override
@@ -338,12 +340,19 @@ public class CourseDaoImpl implements CourseDao {
 	}
 
 	@Override
-	public List<Course> findTutorCourses(Connection conn, long userId) throws DaoException {
+	public List<Course> findTutorCourses(Connection conn, long userId, int state) throws DaoException {
 		List<Course> userCourses = new ArrayList<>();
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			ps = conn.prepareStatement(SQL_SELECT_TUTOR_COURSES);
+			if (state == CourseStateConstant.COURSE_ALL) {
+				ps = conn.prepareStatement(SQL_SELECT_TUTOR_COURSES);
+				ps.setLong(1, userId);
+			} else {
+				ps = conn.prepareStatement(SQL_SELECT_TUTOR_COURSES_WITH_STATE);
+				ps.setLong(1, userId);
+				ps.setLong(2, state);
+			}
 			ps.setLong(1, userId);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -356,6 +365,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
 				course.setCounter(rs.getLong("counter"));
+				course.setState(rs.getInt("state"));
 				userCourses.add(course);
 			}
 		} catch (SQLException e) {

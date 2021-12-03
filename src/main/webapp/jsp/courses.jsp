@@ -116,6 +116,7 @@
                                     <td>Topic</td>
                                     <td>Tutor</td>
                                     <td>Registered</td>
+                                    <td>State</td>
                                     <td></td>
                                 </tr>
                             </thead>
@@ -150,9 +151,11 @@
 		                            </c:forEach>               
 
                                     <td>${course.counter}</td>
+                                    <td>${course.state}</td>
                                     <td>
  	                                        <a href="controller?id=${course.id}&command=delete_course"><span class="glyphicon glyphicon-trash"/></a>
                                     </td>                                    
+
                                 </tr>
                             </c:forEach>               
                         </table>  
@@ -165,11 +168,13 @@
                     </c:otherwise>
                 </c:choose>                        
             </form>
-            
-            <form action ="jsp/new_course.jsp">            
-                
-                <button type="submit" class="btn btn-primary  btn-md">New course</button> 
-            </form>
+
+    		<c:if test ="${currentRole.name !='student'}">                        	
+	            <form action ="jsp/new_course.jsp">                            
+	                <button type="submit" class="btn btn-primary  btn-md">New course</button> 
+	            </form>
+			</c:if>
+    
 		</div>
 </body>
 </html>

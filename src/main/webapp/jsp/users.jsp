@@ -45,9 +45,9 @@
 		<!-- -->
             <!--Search Form -->
             <form action="controller" method="get" id="seachUsersForm" role="form">
-                <input type="hidden" id="searchAction" name="searchAction" value="searchByName">
+                <input type="hidden" id="command" name="command" value="search_user_by_email">
                 <div class="form-group col-xs-5">
-                    <input type="text" name="userName" id="userName" class="form-control" required="true" placeholder="Type the Name or Last Name of the user"/>                    
+                    <input type="text" name="email" id="email" class="form-control" required="true" placeholder="Type the email"/>                    
                 </div>
                 <button type="submit" class="btn btn-info">
                     <span class="glyphicon glyphicon-search"></span> Search

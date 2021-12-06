@@ -192,6 +192,26 @@ public class UserManager {
 		return user;
 	}
 
+	public List<User> FindUserByEmailLike(String email) {
+		List<User> users = new ArrayList<>();
+		Connection conn = null;
+		try {
+			conn = connectionPool.getConnection();
+			users = userDaoImpl.findUserByEmailLike(conn, email);
+		} catch (DaoException e) {
+			log.error("UserManager#FindUserByEmailLike: can't find user", e);
+		} finally {
+			try {
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				log.error("UserManager#FindUserByIdLike: can't close connection", e);
+			}
+		}
+		return users;
+	}
+
 	public User FindUserById(long id) {
 		User user = new User();
 		Connection conn = null;

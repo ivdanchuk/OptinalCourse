@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags" %>
 
 <head>
 	<link rel="stylesheet" href="${context}/css/bootstrap.min.css">   		
@@ -14,9 +15,13 @@
 
 <body>
 	<div class="w3-container">
-		<h2>Optional course</h2>
+		<h2>Optional course </h2>
+		<p style="text-align:left;">
+		    <span style="float:right;">
+		    	<my:user/>	
+		    </span>
+		</p>
 		<div class="w3-bar w3-light-grey w3-border">
-				
 				<c:choose>
     			<c:when test="${currentRole.id=='2'}">
 					<a href="${context}/controller?command=show_tutor_reg_form"
@@ -54,9 +59,9 @@
 				</a> 
 				
 				<input type="text" class="w3-bar-item w3-input w3-white w3-mobile"
-				placeholder="Search..">
+					placeholder="Search..">
 				<button class="w3-bar-item w3-button w3-green w3-mobile">Go</button>
-			
+							 	
 			 	<form action="${context}/controller">
 					<input type="hidden" name="command" value="i18n" />
 			      	<label for="langParam"></label>	
@@ -71,10 +76,10 @@
 								<option>ru</option>
 						    </c:otherwise>
 						</c:choose>
-	      			</select>
-			  </form>
-
+	      			</select>			  
+			  </form>				
 		</div>
 	</div>
 </body>
+
 </html>

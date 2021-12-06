@@ -25,6 +25,7 @@ import com.java.model.command.user.CreateUser;
 import com.java.model.command.user.DeleteUser;
 import com.java.model.command.user.ReadUser;
 import com.java.model.command.user.ReadUsers;
+import com.java.model.command.user.SearchUserByEmail;
 import com.java.model.command.user.UpdateUser;
 
 public enum CommandEnum {
@@ -98,6 +99,12 @@ public enum CommandEnum {
 	UPDATE_COURSE {
 		{
 			this.command = new UpdateCourse();
+		}
+	},
+
+	SEARCH_USER_BY_EMAIL {
+		{
+			this.command = new SearchUserByEmail();
 		}
 	},
 

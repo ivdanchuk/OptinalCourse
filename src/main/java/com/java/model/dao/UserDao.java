@@ -16,4 +16,6 @@ public interface UserDao extends BaseDao<Long, User> {
 
 	Long getRowCount(Connection conn) throws DaoException;
 
+	List<User> findUserByEmailLike(Connection conn, String emailLike) throws DaoException;
+
 }

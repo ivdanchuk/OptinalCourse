@@ -40,6 +40,13 @@
                     <br>
 	                <button type="submit" class="btn btn-primary  btn-md">Update</button> 
             </form>
+			<hr>
+            <form action="${context}/controller" method="get"  id="userForm2" role="form" data-toggle="validator" >
+            <!--  
+            <input type="hidden" id="command" name="command" value="read_users">
+	        	<button type="submit	" class="btn btn-primary  btn-md">Back to users</button> 
+            </form>
+			-->
            </div>                                                      
 
         </div>

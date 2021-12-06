@@ -19,7 +19,7 @@ public class ReadUsers implements IActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		long rowsInTable = UserManager.getInstance().RowCount();
-		int rowsOnPage = 7;
+		int rowsOnPage = Path.ROWS_ON_PAGE;
 		long pages = rowsInTable / rowsOnPage;
 		if ((rowsInTable % rowsOnPage) != 0) {
 			pages++;

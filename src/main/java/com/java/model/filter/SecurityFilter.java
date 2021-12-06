@@ -44,7 +44,7 @@ public class SecurityFilter implements Filter {
 			+ " show_tutor_reg_form read_users_of_course show_mark_form set_mark";
 
 	private static final String COMMANDS_COMMON = "LOGOUT READ_USER READ_CURRENT_USER UPDATE_USER "
-			+ " READ_COURSES READ_TOPICS sort_courses FILTER_TUTOR_COURSES_BY_STATE";
+			+ " READ_COURSES READ_TOPICS sort_courses FILTER_TUTOR_COURSES_BY_STATE SEARCH_USER_BY_EMAIL";
 
 	private static final String COMMANDS_OUT_OF_CONTROL = "LOGIN I18N SIGNUP";
 

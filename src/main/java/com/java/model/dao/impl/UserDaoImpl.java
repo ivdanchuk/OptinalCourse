@@ -23,6 +23,8 @@ public class UserDaoImpl implements UserDao {
 	public static final String SQL_SELECT_LIMIT_USERS = "SELECT * FROM USERS LIMIT ?,?";
 
 	public static final String SQL_SELECT_USER_BY_EMAIL = "SELECT * FROM USERS WHERE email=?";
+	public static final String SQL_SELECT_USER_BY_EMAIL_LIKE = "SELECT * FROM USERS WHERE email LIKE ?";
+
 	public static final String SQL_SELECT_USER_BY_ID = "SELECT * FROM USERS WHERE id=?";
 	public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM USERS WHERE id=?";
 	public static final String SQL_UPDATE_USER_BY_ID = "UPDATE USERS SET f_name=?,l_name=?,email=?,password=?,role_id=?  WHERE id=?";
@@ -140,6 +142,36 @@ public class UserDaoImpl implements UserDao {
 		} catch (SQLException e) {
 			logger.fatal("UserDao#findUsersByRoleId SQLException");
 			throw new DaoException("UserDao#can't execute findUsersByRoleId method", e);
+		} finally {
+			close(ps);
+			close(rs);
+		}
+		return users;
+	}
+
+	@Override
+	public List<User> findUserByEmailLike(Connection conn, String emailLike) throws DaoException {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<User> users = new ArrayList<>();
+		try {
+			ps = conn.prepareStatement(SQL_SELECT_USER_BY_EMAIL_LIKE);
+			ps.setString(1, emailLike);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				User user = new User();
+				user.setId(rs.getLong("id"));
+				user.setF_name(rs.getString("f_name"));
+				user.setL_name(rs.getString("l_name"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setRole_id(rs.getLong("role_id"));
+
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			logger.fatal("UserDao#findUserByEmailLike SQLException");
+			throw new DaoException("UserDao#can't execute findUserByEmailLike method", e);
 		} finally {
 			close(ps);
 			close(rs);

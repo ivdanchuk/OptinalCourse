@@ -15,7 +15,7 @@
 
 <body>
 	<div class="w3-container">
-		<h2>Optional course </h2>
+		<h2><fmt:message key="main.title"/> </h2>
 		<p style="text-align:left;">
 		    <span style="float:right;">
 		    	<my:user/>	

@@ -1,5 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 	<head>
 		<link rel="stylesheet" href="css/bootstrap.min.css">   		
@@ -39,9 +41,8 @@
 
 <jsp:include page="/jsp/templates/header.jsp"></jsp:include>
 	<body>
-
 		<div class="container">
-		<h2>Users</h2>
+		<h2><fmt:message key="users.title"/></h2>
 		<!-- -->
             <!--Search Form -->
             <form action="controller" method="get" id="seachUsersForm" role="form">

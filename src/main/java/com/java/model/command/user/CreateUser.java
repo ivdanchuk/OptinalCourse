@@ -50,7 +50,7 @@ public class CreateUser implements IActionCommand {
 			return page;
 		}
 
-		User user = UserManager.getInstance().FindUserByEmail(email);
+		User user = UserManager.getInstance().findUserByEmail(email);
 		if (user.getEmail() != null) {
 			message = "CreateUser#execute " + "User with email " + email + " already exists";
 			Log.error(message);

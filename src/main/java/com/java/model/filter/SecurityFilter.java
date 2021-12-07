@@ -50,7 +50,6 @@ public class SecurityFilter implements Filter {
 
 	private static final String COMMANDS_BLOCKED = "";
 
-	// read_courses
 	@Override
 	public void init(FilterConfig config) {
 		// roles

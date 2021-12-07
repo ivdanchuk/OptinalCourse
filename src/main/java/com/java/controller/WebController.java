@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.java.model.command.IActionCommand;
 import com.java.model.command.ActionFactory;
+import com.java.model.command.IActionCommand;
 import com.java.model.config.ConfigurationManager;
 import com.java.model.config.MessageManager;
 
@@ -46,25 +46,6 @@ public class WebController extends HttpServlet {
 			address = ConfigurationManager.getProperty("path.page.index");
 			req.getSession().setAttribute("nullPage", MessageManager.getProperty("message.nullpage"));
 			resp.sendRedirect(address);
-		}
-	}
-
-	private void processRequest(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
-		String page = null;
-		ActionFactory client = new ActionFactory();
-		IActionCommand command = client.defineCommand(request);
-
-		page = command.execute(request);
-		Log.debug("Controller#processRequest page:" + page);
-		if (page != null) {
-			request.getRequestDispatcher(page).forward(request, response);
-
-		} else {
-			page = ConfigurationManager.getProperty("path.page.index");
-			request.getSession().setAttribute("nullPage", MessageManager.getProperty("message.nullpage"));
-			response.sendRedirect(request.getContextPath() + page);
 		}
 	}
 }

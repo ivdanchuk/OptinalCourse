@@ -172,7 +172,7 @@ public class UserManager {
 		return result;
 	}
 
-	public User FindUserByEmail(String email) {
+	public User findUserByEmail(String email) {
 		User user = new User();
 		Connection conn = null;
 		try {
@@ -192,7 +192,7 @@ public class UserManager {
 		return user;
 	}
 
-	public List<User> FindUserByEmailLike(String email) {
+	public List<User> findUserByEmailLike(String email) {
 		List<User> users = new ArrayList<>();
 		Connection conn = null;
 		try {

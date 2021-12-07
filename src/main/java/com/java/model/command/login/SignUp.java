@@ -31,7 +31,7 @@ public class SignUp implements IActionCommand {
 			return page;
 		}
 
-		User user = UserManager.getInstance().FindUserByEmail(email);
+		User user = UserManager.getInstance().findUserByEmail(email);
 		if (user.getEmail() != null) {
 			request.getSession().setAttribute("errorLoginPassMessage",
 					MessageManager.getProperty("message.login.already.exist"));

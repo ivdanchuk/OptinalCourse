@@ -26,7 +26,7 @@ public class UserService {
 	}
 
 	public boolean isExistUser(String email) {
-		User user = UserManager.getInstance().FindUserByEmail(email);
+		User user = UserManager.getInstance().findUserByEmail(email);
 		if (!isEmptyUser(user)) {
 			return true;
 		}
@@ -34,7 +34,7 @@ public class UserService {
 	}
 
 	public User getAuthorizedUser(String email, String pass, StringBuilder message) {
-		User user = UserManager.getInstance().FindUserByEmail(email);
+		User user = UserManager.getInstance().findUserByEmail(email);
 		if (isEmptyUser(user)) {
 			message.append("There is no such login");
 			return null;

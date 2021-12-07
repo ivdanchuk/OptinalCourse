@@ -17,7 +17,7 @@ public class SearchUserByEmail implements IActionCommand {
 		String email = request.getParameter("email");
 
 		List<User> users = new ArrayList<>();
-		users = UserManager.getInstance().FindUserByEmailLike(email + "%");
+		users = UserManager.getInstance().findUserByEmailLike(email + "%");
 		request.setAttribute("users", users);
 
 		long rowsInTable = users.size();

@@ -11,7 +11,7 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.java.model.constant.CourseStateConstant;
+import com.java.model.constant.CourseStateId;
 import com.java.model.dao.CourseDao;
 import com.java.model.dto.CourseOfStudent;
 import com.java.model.dto.StudentOfCourse;
@@ -174,7 +174,7 @@ public class CourseDaoImpl implements CourseDao {
 		List<Course> courses = new ArrayList<>();
 		try {
 			ps = conn.prepareStatement(SQL_SELECT_ALL_NOT_STARTED_COURSES);
-			ps.setLong(1, CourseStateConstant.COURSE_NOTSTARTED);
+			ps.setLong(1, CourseStateId.COURSE_NOTSTARTED);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				Course course = new Course();
@@ -216,6 +216,7 @@ public class CourseDaoImpl implements CourseDao {
 				course.setTopic_id(rs.getLong("topic_id"));
 				course.setUser_id(rs.getLong("user_id"));
 				course.setCounter(rs.getLong("counter"));
+				course.setState(rs.getInt("state"));
 			}
 		} catch (SQLException e) {
 			logger.fatal("CourseDao#findEntity SQLException");
@@ -345,7 +346,7 @@ public class CourseDaoImpl implements CourseDao {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		try {
-			if (state == CourseStateConstant.COURSE_ALL) {
+			if (state == CourseStateId.COURSE_ALL) {
 				ps = conn.prepareStatement(SQL_SELECT_TUTOR_COURSES);
 				ps.setLong(1, userId);
 			} else {

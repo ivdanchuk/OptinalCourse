@@ -12,46 +12,24 @@ import com.java.model.command.IActionCommand;
 import com.java.model.constant.Path;
 import com.java.model.dao.manager.UserManager;
 import com.java.model.entity.User;
+import com.java.model.service.UserPaginationService;
 
 public class ReadUsers implements IActionCommand {
 	private final static Logger log = LogManager.getLogger(UserManager.class);
 
 	@Override
 	public String execute(HttpServletRequest request) {
-		long rowsInTable = UserManager.getInstance().RowCount();
-		int rowsOnPage = Path.ROWS_ON_PAGE;
-		long pages = rowsInTable / rowsOnPage;
-		if ((rowsInTable % rowsOnPage) != 0) {
-			pages++;
-		}
-		int pageNumber = 0;
-		int selectTo = 0;
-		int selectFrom = 0;
+		int totalPages = UserPaginationService.calculateTotalPages();
+		int pageNumber = UserPaginationService.defineCurrentPageNumber(request, totalPages);
 
-		String page = request.getParameter("page");
-		if (page != null) {
-			pageNumber = Integer.parseInt(page);
-			request.getSession().setAttribute("UsersPageNum", pageNumber);
-		} else {
-			Integer pageInSession = (Integer) request.getSession().getAttribute("UsersPageNum");
-			if (pageInSession != null) {
-				pageNumber = pageInSession;
-				if (pageNumber > pages) {
-					pageNumber--;
-				}
-			} else {
-				pageNumber = 1;
-			}
-		}
-
-		selectFrom = pageNumber * rowsOnPage - rowsOnPage;
+		int selectFrom = pageNumber * Path.ROWS_ON_PAGE - Path.ROWS_ON_PAGE;
 		List<User> users = new ArrayList<>();
-		users = UserManager.getInstance().listAllUsersFromTo(selectFrom, rowsOnPage);
+		users = UserManager.getInstance().listAllUsersFromTo(selectFrom, Path.ROWS_ON_PAGE);
 		request.setAttribute("users", users);
 
-		request.setAttribute("pages", pages);
+		request.setAttribute("pages", totalPages);
 		request.setAttribute("selectedPage", pageNumber);
-		// log.debug("ListUser#execute " + users);
+		log.debug("ReadUsers#execute: " + "show page # " + pageNumber);
 
 		return Path.PAGE__USERS;
 	}

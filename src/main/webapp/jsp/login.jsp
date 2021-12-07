@@ -30,7 +30,7 @@
 		 	<input type="submit" class="btn btn-primary  btn-md" value="Sign in" style="margin-right:50px"/>
 		</form>
 		<hr/>
-		<input type = "button" class="btn btn-primary  btn-md" value="Sign up" onclick = "location.href='jsp/signup.jsp'"/>
+		<input type = "button" class="btn btn-primary  btn-md" value="Sign up" onclick = "location.href='${context}/jsp/signup.jsp'"/>
 		<br><br>	
 		${errorLoginPassMessage}
 		<br/>
@@ -38,13 +38,11 @@
 		<br/>
 		${nullPage}
 		<br/><br/>	
-		Demo accounts are: 
-		<br>
 		Admin: admin@admin.com 
 		<br>
-		Tutor: maksym@gmail.com 
+		Tutor: maksym@gmail.com, dmytro@gmail.com, tutor2@gmail.com  
 		<br>
-		Student: ivdanchuk@gmail.com
+		Student: ivdanchuk@gmail.com, ivanov@gmail.com, victor@gmail.ua
 		<br><br>
 
 	</div>

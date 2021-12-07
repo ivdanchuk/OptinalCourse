@@ -35,6 +35,8 @@ public class ReadStudentCourses implements IActionCommand {
 
 		} else {
 			request.setAttribute("userCourses", CourseManager.getInstance().findAllStudentCourses(currentUser.getId()));
+			int getAll = 0;
+			request.setAttribute("getOption", getAll);
 		}
 
 		path = Path.PAGE__USER_COURSES;

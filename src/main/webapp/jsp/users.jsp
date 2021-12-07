@@ -65,7 +65,7 @@
     
             <form action="controller" method="post" id="usersForm" role="form" >              
                 <input type="hidden" id="id" name="id" value="">
-                <input type="hidden" id="command" name="command" value="">
+                <input type="hidden" id="command" name="command" value="delete_user">
                 <c:choose>
                     <c:when test="${not empty users}">
                         <table  class="table table-striped">
@@ -118,8 +118,7 @@
                     </c:otherwise>
                 </c:choose>                        
             </form>
-            <form action ="jsp/new_user.jsp">            
-                
+            <form action ="jsp/new_user.jsp">                            
                 <button type="submit" class="btn btn-primary  btn-md">New user</button> 
             </form>
 		</div>

@@ -1,6 +1,6 @@
 package com.java.model.constant;
 
-public interface RoleConstant {
+public interface RoleId {
 	public static final String ROLE_ADMIN_NAME = "admin";
 	public static final long ROLE_ADMIN_ID = 1l;
 

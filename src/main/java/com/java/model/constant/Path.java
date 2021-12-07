@@ -3,6 +3,7 @@ package com.java.model.constant;
 public final class Path {
 
 	public static final int ROWS_ON_PAGE = 7;
+
 	public static final String LOCALE_NAME_RU = "ru";
 	public static final String LOCALE_NAME_EN = "en";
 

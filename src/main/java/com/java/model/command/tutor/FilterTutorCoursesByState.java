@@ -8,7 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.java.model.command.IActionCommand;
-import com.java.model.constant.CourseStateConstant;
+import com.java.model.constant.CourseStateId;
 import com.java.model.constant.Path;
 import com.java.model.dao.impl.CourseDaoImpl;
 import com.java.model.dao.manager.CourseManager;
@@ -30,7 +30,7 @@ public class FilterTutorCoursesByState implements IActionCommand {
 			return path;
 		}
 
-		int CourseState = CourseStateConstant.COURSE_ALL;
+		int CourseState = CourseStateId.COURSE_ALL;
 		String CourseStateParam = request.getParameter("CourseStateId");
 		if (CourseStateParam != null) {
 			CourseState = Integer.parseInt(CourseStateParam);

@@ -17,6 +17,12 @@ public class RegStudentForCourse implements IActionCommand {
 	@Override
 	public String execute(HttpServletRequest request) {
 		String path = Path.PAGE__ERROR_PAGE;
+		String id = request.getParameter(PARAM_NAME_COURSE_ID);
+		if (id == null) {
+			request.getSession().setAttribute("errorMessage", MessageManager.getProperty("message.empty.course"));
+			return path;
+		}
+
 		User currenttUser = (User) request.getSession().getAttribute("currentUser");
 		long courseId = Long.parseLong(request.getParameter(PARAM_NAME_COURSE_ID));
 
@@ -33,7 +39,7 @@ public class RegStudentForCourse implements IActionCommand {
 			path = Path.COMMAND__READ_STUDENT_COURSES;
 			CourseManager.getInstance().registerStudentForCourse(currenttUser.getId(), courseId);
 		} else {
-			request.getSession().setAttribute("errorMessage", MessageManager.getProperty("message.alreadyregistered"));
+			request.getSession().setAttribute("errorMessage", MessageManager.getProperty("message.already.registered"));
 		}
 		return path;
 	}

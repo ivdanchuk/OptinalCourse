@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.java.model.command.IActionCommand;
 import com.java.model.config.MessageManager;
 import com.java.model.constant.Path;
-import com.java.model.constant.RoleConstant;
+import com.java.model.constant.RoleId;
 import com.java.model.dao.manager.UserManager;
 import com.java.model.entity.User;
 import com.java.model.service.PasswordService;
@@ -38,7 +38,7 @@ public class SignUp implements IActionCommand {
 			return page;
 		} else {
 			String hashPass = PasswordService.hash(pass);
-			user = new User(-1l, fname, lname, email, hashPass, RoleConstant.ROLE_STUDENT_ID);
+			user = new User(-1l, fname, lname, email, hashPass, RoleId.ROLE_STUDENT_ID);
 			UserManager.getInstance().CreateUser(user);
 			request.getSession().setAttribute("errorLoginPassMessage", MessageManager.getProperty("message.signup.ok"));
 			page = Path.PAGE__LOGIN;

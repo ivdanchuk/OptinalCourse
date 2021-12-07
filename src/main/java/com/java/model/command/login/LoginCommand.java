@@ -43,9 +43,9 @@ public class LoginCommand implements IActionCommand {
 			request.getSession().setAttribute("defaultLocale", "en");
 			page = Path.PAGE__MAIN;
 		} else {
-			request.getSession().setAttribute("errorMessage", message.toString());
-			// request.getSession().setAttribute("errorLoginPassMessage",
-			// MessageManager.getProperty("message.loginnotexist"));
+			request.getSession().setAttribute("errorLoginPassMessage", message.toString());
+//			request.getSession().setAttribute("errorLoginPassMessage",
+//					MessageManager.getProperty("message.loginnotexist"));
 		}
 		return page;
 	}

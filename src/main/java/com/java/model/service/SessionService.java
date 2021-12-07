@@ -1,12 +1,14 @@
 package com.java.model.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.java.model.constant.CourseStateConstant;
-import com.java.model.constant.RoleConstant;
+import com.java.model.constant.CourseStateId;
+import com.java.model.constant.RoleId;
 import com.java.model.dao.manager.CourseManager;
 import com.java.model.dao.manager.RoleManager;
 import com.java.model.dao.manager.TopicManager;
@@ -20,23 +22,23 @@ import com.java.model.entity.User;
 public class SessionService {
 	public static void setTutors(HttpServletRequest request) {
 		List<User> tutors = new ArrayList<>();
-		tutors = UserManager.getInstance().listAllUsersByRoleID(RoleConstant.ROLE_TUTOR_ID);
+		tutors = UserManager.getInstance().listAllUsersByRoleID(RoleId.ROLE_TUTOR_ID);
 		request.getSession().setAttribute("tutors", tutors);
 	}
 
 	public static void setCoursesState(HttpServletRequest request) {
 		List<CourseState> coursesState = new ArrayList<>();
 
-		CourseState courseState = new CourseState(CourseStateConstant.COURSE_NOTSTARTED, "Not started");
+		CourseState courseState = new CourseState(CourseStateId.COURSE_NOTSTARTED, "Not started");
 		coursesState.add(courseState);
 
-		courseState = new CourseState(CourseStateConstant.COURSE_STARTED, "In progress");
+		courseState = new CourseState(CourseStateId.COURSE_STARTED, "In progress");
 		coursesState.add(courseState);
 
-		courseState = new CourseState(CourseStateConstant.COURSE_FINISHED, "Finished");
+		courseState = new CourseState(CourseStateId.COURSE_FINISHED, "Finished");
 		coursesState.add(courseState);
 
-		courseState = new CourseState(CourseStateConstant.COURSE_ALL, "All");
+		courseState = new CourseState(CourseStateId.COURSE_ALL, "All");
 		coursesState.add(courseState);
 
 		request.getSession().setAttribute("coursesState", coursesState);
@@ -73,8 +75,19 @@ public class SessionService {
 	public static void setRolesForCurrentUser(HttpServletRequest request, User currentUser) {
 		List<Role> roles = new ArrayList<>();
 		Role role = null;
-		if (currentUser.getRole_id() == RoleConstant.ROLE_ADMIN_ID) {
+		if (currentUser.getRole_id() == RoleId.ROLE_ADMIN_ID) {
 			roles = RoleManager.getInstance().listAllRoles();
+			Collections.sort(roles, new Comparator<Role>() {
+				@Override
+				public int compare(Role r1, Role r2) {
+					if (r1.getId() > r2.getId())
+						return 1;
+					if (r1.getId() < r2.getId())
+						return -1;
+					return 0;
+				}
+			});
+
 		} else {
 			role = RoleManager.getInstance().FindRoleById(currentUser.getRole_id());
 			roles.add(role);
@@ -85,7 +98,7 @@ public class SessionService {
 
 	public static void setRolesForNewUser(HttpServletRequest request, User currentUser) {
 		List<Role> roles = new ArrayList<>();
-		Role role = RoleManager.getInstance().FindRoleById(RoleConstant.ROLE_STUDENT_ID);
+		Role role = RoleManager.getInstance().FindRoleById(RoleId.ROLE_STUDENT_ID);
 		roles.add(role);
 		request.getSession().setAttribute("roles", roles);
 	}

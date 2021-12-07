@@ -21,7 +21,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.java.model.constant.Path;
-import com.java.model.constant.RoleConstant;
+import com.java.model.constant.RoleId;
 import com.java.model.entity.Role;
 
 @WebFilter(urlPatterns = "/controller")
@@ -54,10 +54,10 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void init(FilterConfig config) {
 		// roles
-		accessMap.put(RoleConstant.ROLE_ADMIN_NAME, asList(COMMANDS_ADMIN));
-		accessMap.put(RoleConstant.ROLE_STUDENT_NAME, asList(COMMANDS_STUDENT));
-		accessMap.put(RoleConstant.ROLE_TUTOR_NAME, asList(COMMANDS_TUTOR));
-		accessMap.put(RoleConstant.ROLE_BLOCED_NAME, asList(COMMANDS_BLOCKED));
+		accessMap.put(RoleId.ROLE_ADMIN_NAME, asList(COMMANDS_ADMIN));
+		accessMap.put(RoleId.ROLE_STUDENT_NAME, asList(COMMANDS_STUDENT));
+		accessMap.put(RoleId.ROLE_TUTOR_NAME, asList(COMMANDS_TUTOR));
+		accessMap.put(RoleId.ROLE_BLOCED_NAME, asList(COMMANDS_BLOCKED));
 
 		// commons
 		commons = asList(COMMANDS_COMMON);
@@ -105,6 +105,7 @@ public class SecurityFilter implements Filter {
 			log.error("SecurityFilter#accessAllowed: role is NULL !");
 			return false;
 		}
+
 		boolean result = accessMap.get(userRole.getName()).contains(commandName) || commons.contains(commandName);
 		if (!result) {
 			log.error("SecurityFilter#accessAllowed: You do not have permission to access " + commandName);

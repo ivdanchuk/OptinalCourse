@@ -12,7 +12,7 @@
         <div class="container">
         	 <!--<h2>Topic</h2> -->
 			 <br>	
-            <form action="/optinal-course/controller" method="post"  role="form" data-toggle="validator" >
+            <form action="${context}/controller" method="post"  role="form" data-toggle="validator" >
                 <input type="hidden" id="command" name="command" value="reg_student_for_course">
                 <input type="hidden" id="userId" name="userId" value="${selectedUser.id}">
 				    <label for="course">Choose the course:</label>

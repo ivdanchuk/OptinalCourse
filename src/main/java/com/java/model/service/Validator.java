@@ -2,7 +2,7 @@ package com.java.model.service;
 
 import java.util.regex.Pattern;
 
-import com.java.model.constant.RoleConstant;
+import com.java.model.constant.RoleId;
 
 public class Validator {
 
@@ -35,7 +35,6 @@ public class Validator {
 		} catch (NumberFormatException e) {
 			return false;
 		}
-		return ((id > 0) && (id <= RoleConstant.ROLE_BLOCED_ID));
+		return ((id > 0) && (id <= RoleId.ROLE_BLOCED_ID));
 	}
-
 }

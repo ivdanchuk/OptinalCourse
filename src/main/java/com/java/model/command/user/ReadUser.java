@@ -7,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.java.model.command.IActionCommand;
 import com.java.model.constant.Path;
-import com.java.model.constant.RoleConstant;
+import com.java.model.constant.RoleId;
 import com.java.model.dao.manager.RoleManager;
 import com.java.model.dao.manager.UserManager;
 import com.java.model.entity.Role;
@@ -30,7 +30,7 @@ public class ReadUser implements IActionCommand {
 		}
 
 		path = Path.PAGE__USER;
-		if (RoleConstant.ROLE_ADMIN_ID != currentRole.getId()) {
+		if (RoleId.ROLE_ADMIN_ID != currentRole.getId()) {
 			currentUser = UserManager.getInstance().FindUserById(currentUser.getId());
 			currentRole = RoleManager.getInstance().FindRoleById(currentUser.getRole_id());
 			request.getSession().setAttribute("selectedUser", currentUser);

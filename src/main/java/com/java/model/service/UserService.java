@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.java.model.command.course.ReadCourses;
-import com.java.model.constant.RoleConstant;
+import com.java.model.constant.RoleId;
 import com.java.model.dao.manager.UserManager;
 import com.java.model.entity.User;
 
@@ -46,7 +46,7 @@ public class UserService {
 			return null;
 		}
 
-		if (user.getRole_id() == RoleConstant.ROLE_BLOCED_ID) {
+		if (user.getRole_id() == RoleId.ROLE_BLOCED_ID) {
 			message.append("Account is blocked");
 			return null;
 		}
